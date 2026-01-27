@@ -7,7 +7,7 @@
   "type": "module",
   "main": "app-memory.js",
   "scripts": {
-    "start": "node app-postgres.js",
+    "start": "node app-memory.js",
     "start:memory": "node app-memory.js",
     "start:postgres": "node app-postgres.js",
 

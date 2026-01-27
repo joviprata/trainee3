@@ -79,7 +79,7 @@ app.delete('/usuarios/:id', (req, res) => { // DELETE
     const { id } = req.params; 
     const usuarioIndex = usuarios.findIndex(usuario => usuario.id === Number(id));
     
-    if (i_usuario_a_deletar === -1) {
+    if (usuarioIndex === -1) {
         return res.status(404).send({error: "Usuário não encontrado"});
     }
 
