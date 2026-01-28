@@ -13,7 +13,7 @@ Em seguida, rode o seguinte comando no terminal para iniciar o aplicativo:
 
 ## Debug do API
 Foi utilizado o Postman para realizar testes de requests de API.<br/>
-Além disso, foi instalado o Nodemon para reiniciar o servidor automaticamente quando o código é alterado, facilitando o desenvolvimento do projeto.
+Além disso, foi instalado o Nodemon para reiniciar o servidor automaticamente quando o código é alterado, facilitando o desenvolvimento do projeto ( ```npm run dev``` ).
 
 <p align= "center">  
   <img width="1920" height="1080" alt="Postman - GET (listar todos)" src="https://github.com/user-attachments/assets/726bf4b0-7a1c-4066-be54-571e436668e4" />
