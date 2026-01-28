@@ -113,6 +113,6 @@ app.delete('/usuarios/:id', (req, res) => { // DELETE
 });
 
 
-app.listen(port, () => { // escuta na porta 3000
+app.listen(port, () => { // Escuta na porta 3000
     console.log(`App escutando na porta ${port} - http://localhost:${port}`);
 });
