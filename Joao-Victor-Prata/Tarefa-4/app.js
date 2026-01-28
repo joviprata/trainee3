@@ -55,6 +55,29 @@ app.get('/usuarios/:id', (req, res) => { // READ
 });
 
 
+app.put('/usuarios/:id', (req, res) => { // UPDATE
+    // Procurar usuário pelo id:
+    const { id } = req.params; 
+    const usuarioSelecionado = usuarios.find(usuario => usuario.id === Number(id));
+    
+    if (!usuarioSelecionado) {
+        return res.status(404).send({error: "Usuário não encontrado"});
+    }
+
+    // Atualizar todos os dados:
+    const { nome, email } = req.body;
+
+    if (!nome || !email) {
+        return res.status(400).send({error: "Nome e e-mail são obrigatórios"});
+    };
+
+    usuarioSelecionado.nome = nome;
+    usuarioSelecionado.email = email;
+
+    return res.status(200).send({message: 'Dados de usuário foram atualizados', usuario: usuarioSelecionado});
+});
+
+
 app.patch('/usuarios/:id', (req, res) => { // UPDATE
     // Procurar usuário pelo id:
     const { id } = req.params; 
@@ -64,7 +87,7 @@ app.patch('/usuarios/:id', (req, res) => { // UPDATE
         return res.status(404).send({error: "Usuário não encontrado"});
     }
 
-    // Atualizar dados:
+    // Atualizar um ou mais dados:
     const { nome, email } = req.body;
 
     if (nome) usuarioSelecionado.nome = nome;
