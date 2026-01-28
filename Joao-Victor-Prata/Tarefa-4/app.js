@@ -29,7 +29,7 @@ app.post('/usuarios', (req, res) => { // CREATE
         id: usuarios.length + 1,
         nome,
         email
-    }
+    };
 
     usuarios.push(novoUsuario);
 
@@ -39,7 +39,7 @@ app.post('/usuarios', (req, res) => { // CREATE
 
 app.get('/usuarios', (req, res) => { // READ
     res.status(200).send(usuarios); // Ler informações sobre todos os usuários
-})
+});
 
 
 app.get('/usuarios/:id', (req, res) => { // READ
@@ -49,7 +49,7 @@ app.get('/usuarios/:id', (req, res) => { // READ
     
     if (usuarioSelecionado) {
         return res.status(200).send(usuarioSelecionado); 
-    }
+    };
 
     return res.status(404).send({error: "Usuário não encontrado"});
 });
@@ -62,7 +62,7 @@ app.put('/usuarios/:id', (req, res) => { // UPDATE
     
     if (!usuarioSelecionado) {
         return res.status(404).send({error: "Usuário não encontrado"});
-    }
+    };
 
     // Atualizar todos os dados:
     const { nome, email } = req.body;
@@ -85,7 +85,7 @@ app.patch('/usuarios/:id', (req, res) => { // UPDATE
     
     if (!usuarioSelecionado) {
         return res.status(404).send({error: "Usuário não encontrado"});
-    }
+    };
 
     // Atualizar um ou mais dados:
     const { nome, email } = req.body;
@@ -104,7 +104,7 @@ app.delete('/usuarios/:id', (req, res) => { // DELETE
     
     if (usuarioIndex === -1) {
         return res.status(404).send({error: "Usuário não encontrado"});
-    }
+    };
 
     // Deletar usuário do array:
     const usuarioDeletado = usuarios.splice(usuarioIndex, 1)[0]; 
