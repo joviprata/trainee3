@@ -5,15 +5,10 @@
   "license": "ISC",
   "author": "João Victor Prata",
   "type": "module",
-  "main": "app-memory.js",
+  "main": "app.js",
   "scripts": {
-    "start": "node app-memory.js",
-    "start:memory": "node app-memory.js",
-    "start:postgres": "node app-postgres.js",
-
-    "dev:memory": "nodemon app-memory.js",
-    "dev:postgres": "nodemon app-postgres.js",
-
+    "start": "node app.js",
+    "dev": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

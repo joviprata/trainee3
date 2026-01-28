@@ -1,14 +1,16 @@
 # Tarefa 4 - Projeto API REST
-Implementação de uma API REST simples em Node.js.<br/>
-Para este projeto, foi feito um CRUD básico sobre entidade USUÁRIOS utilizando o web framework Express.
+Implementação de uma API REST em Node.js.<br/>
+Para este projeto, foi feito um CRUD sobre entidade USUÁRIOS utilizando o web framework Express.
+
+## Instalação
+Para instalar e rodar este projeto, clone este repositório, e navegue para a pasta do projeto (Tarefa-4). Instale as dependências rodando o seguinte comando no terminal:
+
+```npm install```
+
+Em seguida, rode o seguinte comando no terminal para iniciar o aplicativo:
+
+```npm start```
 
 ## Debug do API
-Para realizar testes de requests de API, foi utilizado o Postman, um REST Client
-
-## Nodemon
-O nodemon foi instalado para reiniciar o servidor automaticamente quando o código é alterado, facilitando o desenvolvimento do projeto
-
-## Referências
-[Fireship -  RESTful APIs in 100 Seconds // Build an API from Scratch with Node.js Express
-Fireship](https://youtu.be/-MTSQjw5DrM?si=HrODP6FF2euuSosn)<br/>
-Módulo "Criando APIs com ExpressJS" do curso JavaScript Impressionador da Hashtag
+Foi utilizado o Postman para realizar testes de requests de API.<br/>
+Além disso, foi instalado o Nodemon para reiniciar o servidor automaticamente quando o código é alterado, facilitando o desenvolvimento do projeto.
