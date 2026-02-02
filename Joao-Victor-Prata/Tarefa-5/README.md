@@ -1,9 +1,9 @@
-# Tarefa 4 - Projeto API REST
-Implementação de uma API REST em Node.js.<br/>
-Para este projeto, foi feito um CRUD sobre entidade Usuários utilizando o web framework Express.
+# Tarefa 5 - API RESTful: Stateless para Stateful
+Aplicação de princípios de API RESTful no projeto desenvolvido na Tarefa-4 (um CRUD sobre entidade Usuários utilizando o Express).<br/>
+Duas versões para o projeto foram feitas: [Stateless](https://github.com/joviprata/trainee3/tree/Joao-Victor-Prata/Joao-Victor-Prata/Tarefa-5/5.1-API-Stateless) e [Stateful](https://github.com/joviprata/trainee3/tree/Joao-Victor-Prata/Joao-Victor-Prata/Tarefa-5/5.2-API-Stateful).<br/>
 
 ## Instalação
-Para instalar e rodar este projeto, clone este repositório, e navegue para a pasta do projeto (Tarefa-4). Instale as dependências rodando o seguinte comando no terminal:
+Para instalar e rodar este projeto, clone este repositório e navegue para a pasta do projeto (Stateless ou Stateful). Instale as dependências rodando o seguinte comando no terminal:
 
 ```npm install```
 
