@@ -1,5 +1,5 @@
 # Tarefa 5 - API RESTful: Stateless para Stateful
-Aplicação de princípios de API RESTful no projeto desenvolvido na Tarefa-4 (um CRUD sobre entidade Clientes utilizando o Express).<br/>
+Aplicação de princípios de API RESTful no projeto desenvolvido na [Tarefa-4](https://github.com/joviprata/trainee3/tree/Joao-Victor-Prata/Joao-Victor-Prata/Tarefa-4) (um CRUD sobre entidade Clientes utilizando o Express).<br/>
 Duas versões para o projeto foram feitas: [Stateless](https://github.com/joviprata/trainee3/tree/Joao-Victor-Prata/Joao-Victor-Prata/Tarefa-5/5.1-API-Stateless) e [Stateful](https://github.com/joviprata/trainee3/tree/Joao-Victor-Prata/Joao-Victor-Prata/Tarefa-5/5.2-API-Stateful).<br/>
 A versão **Stateless** exige que o usuário acessando a API informe o token de acesso em todas as requisições que fizer.<br/>
   A versão **Stateful**, por outro lado, exige que o usuário faça autenticação apenas uma vez, fazendo uma requisição POST/login e informando o nome e senha. Quando autenticado, o usuário consegue realizar todas as requisições que quiser sem que o sistema exija novamente as credenciais dele. Para deslogar, o usuário pode fazer requisição POST/logout ou simplesmente finalizar a sessão interrompendo o aplicativo pelo terminal. Esta versão utiliza cookies de navegação para que o sistema possa armazenar informações do usuário. 
