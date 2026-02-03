@@ -18,32 +18,43 @@ Foi utilizado o Postman para realizar testes de requests de API.<br/>
 Além disso, foi instalado o Nodemon para reiniciar o servidor automaticamente quando o código é alterado, facilitando o desenvolvimento do projeto ( ```npm run dev``` ).
 
 ## Rotas
+
+### POST (login):
+<p align= "center">  
+  <img width="1920" height="1080" alt="Postman - POST (login)" src="https://github.com/user-attachments/assets/45f08821-9c11-4da8-9e93-0b96339affd2" />
+<p/>
+  
 ### GET (listar todos):
 <p align= "center">  
-  <img width="1920" height="1080" alt="Postman - GET (listar todos)" src="https://github.com/user-attachments/assets/726bf4b0-7a1c-4066-be54-571e436668e4" />
+  <img width="1920" height="1080" alt="Postman - GET (listar todos)" src="https://github.com/user-attachments/assets/c58263d3-34a4-461b-9f30-b589a9771d69" />
 <p/>
 
 ### GET (buscar por id):
 <p align= "center">  
-  <img width="1920" height="1080" alt="Postman - GET (buscar por id)" src="https://github.com/user-attachments/assets/8c408e7b-e6e5-44b5-a228-83e6def0231b" />
+  <img width="1920" height="1080" alt="Postman - GET (buscar por id)" src="https://github.com/user-attachments/assets/5497f612-7920-4055-ba0b-188e3798ca59" />
 <p/>
 
 ### POST:
 <p align= "center">  
-  <img width="1920" height="1080" alt="Postman - POST" src="https://github.com/user-attachments/assets/ab25b9b2-b9b7-4b15-a0c0-e3e1c0f454dd" />
+  <img width="1920" height="1080" alt="Postman - POST" src="https://github.com/user-attachments/assets/3bf5dca4-051b-4c40-918b-6fd44732c16c" />
 <p/>
 
 ### PUT:
 <p align= "center">  
-  <img width="1920" height="1080" alt="Postman - PUT" src="https://github.com/user-attachments/assets/a020d6d6-b62a-468b-9cb5-43b978d795eb" />
+  <img width="1920" height="1080" alt="Postman - PUT" src="https://github.com/user-attachments/assets/1986d954-7d0c-403c-b0d5-3ece2664052e" />
 <p/>
 
 ### PATCH:
 <p align= "center">  
-  <img width="1920" height="1080" alt="Postman - PATCH" src="https://github.com/user-attachments/assets/27fe483e-c7fb-488a-91bc-cfde022ad35a" />
+  <img width="1920" height="1080" alt="Postman - PATCH" src="https://github.com/user-attachments/assets/b814b7c6-55de-40b5-9e80-94f0bd92e539" />
 <p/>
 
 ### DELETE:
 <p align= "center">  
-  <img width="1920" height="1080" alt="Postman - DELETE" src="https://github.com/user-attachments/assets/7cb2ef62-e38c-47c1-b74f-6acaaa91e2c2" />
+  <img width="1920" height="1080" alt="Postman - DELETE" src="https://github.com/user-attachments/assets/e99bc380-615c-4ee4-825c-150b2f883065" />
+<p/>
+
+### POST (logout):
+<p align= "center">  
+  <img width="1920" height="1080" alt="Postman - POST (logout)" src="https://github.com/user-attachments/assets/d4972e2b-3d50-4ff7-900c-bac2a75387d9" />
 <p/>
