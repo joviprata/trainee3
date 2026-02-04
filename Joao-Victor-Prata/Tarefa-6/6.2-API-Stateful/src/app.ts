@@ -35,7 +35,6 @@ function gerarToken() {
 
 function authUsuario(req, res, next) {
     const token = req.cookies.idSessao;
-    console.log(token);
 
     if (!token || !sessoes[token]) {
         return res.status(401).send({error: "Usuário não autenticado"});
