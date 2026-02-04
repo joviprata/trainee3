@@ -5,10 +5,10 @@
   "license": "ISC",
   "author": "João Victor Prata",
   "type": "module",
-  "main": "app.ts",
+  "main": "src/app.ts",
   "scripts": {
-    "start": "node app.ts",
-    "dev": "nodemon app.ts",
+    "start": "node src/app.ts",
+    "dev": "nodemon src/app.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

@@ -14,10 +14,9 @@ Em seguida, rode o seguinte comando no terminal para iniciar o aplicativo:
 # Passos Realizados para Migração:
 - Em package.json, "app.js" foi substituído por "app.ts";
 - O arquivo "app.js" foi renomeado para "app.ts" e foi movido para pasta nova "src";
-- ```npm install``` foi rodado novamente após excluído a pasta "node_modules", para reinstalar algumas dependências, dessa vez com o aplicativo rodando em.ts;
-- ```npm install -D typescript ts-node-dev @types/node @types/express``` foi rodado, e ```npm i --save-dev @types/cookie-parser``` foi rodado também, para instalar dependências necessárias do projeto;
+- ```npm install``` foi rodado novamente após excluída a pasta "node_modules" para reinstalar algumas dependências, dessa vez com o aplicativo rodando em.ts;
+- ```npm install -D typescript ts-node-dev @types/node @types/express``` foi rodado, e ```npm i --save-dev @types/cookie-parser```, para instalar dependências necessárias do projeto;
 - ```npx tsc --init``` foi rodado para criar um novo tsconfig.json;
-- Em "tsconfig.json", ```"verbatimModuleSyntax"``` foi definido como ```false```, facilitando importação de módulos tipados;
 - Outras alterações foram feitas no código para que funcione com a sintaxe do Typescript, podendo ser observadas nos commits deste projeto.
 
 ## Debug do API
