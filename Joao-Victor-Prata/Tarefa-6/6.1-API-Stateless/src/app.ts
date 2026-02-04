@@ -1,12 +1,23 @@
 import express from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import 'dotenv/config';
 
 const app = express();
 const port = 3000;
 
-const usuarios = {
-  [process.env.TOKEN_USUARIO_ADMIN_1]: { id: 1, nome: 'Jovi' }
-}
+interface Usuario {
+    token: string;
+    id: number;
+    nome: string;
+};
+
+const usuarios: Record<string, Usuario> = {
+  [process.env.TOKEN_USUARIO_ADMIN_1 as string]: {
+    token: process.env.TOKEN_USUARIO_ADMIN_1 as string,
+    id: 1,
+    nome: 'Jovi',
+  },
+};
 
 let clientes = [
     { id: 1, nome: 'Péricles', email: 'pericles@gmail.com'},
@@ -21,7 +32,7 @@ let clientes = [
 
 
 // Autenticação:
-function authUsuario(req, res, next) {
+function authUsuario(req: Request, res: Response, next: NextFunction) {
     const authHeader = req.headers.authorization;
 
     if (!authHeader) {
@@ -36,8 +47,6 @@ function authUsuario(req, res, next) {
         return res.status(401).send({error: "Usuário não encontrado"});
     };
 
-    req.user = user; // pega dados de usuário (id e nome) se necessário obter depois nos endpoints
-
     next();
 };
 
@@ -45,7 +54,7 @@ function authUsuario(req, res, next) {
 app.use(express.json()); // Middleware que traduz o body do request para JSON
 
 
-app.post('/clientes', authUsuario, (req, res) => { // CREATE
+app.post('/clientes', authUsuario, (req: Request, res: Response) => { // CREATE
     // Criar um cliente novo informando nome e email:
     const { nome, email } = req.body;
 
@@ -65,12 +74,12 @@ app.post('/clientes', authUsuario, (req, res) => { // CREATE
 });
 
 
-app.get('/clientes', authUsuario, (req, res) => { // READ
+app.get('/clientes', authUsuario, (req: Request, res: Response) => { // READ
     res.status(200).send(clientes); // Ler informações sobre todos os clientes
 });
 
 
-app.get('/clientes/:id', authUsuario, (req, res) => { // READ
+app.get('/clientes/:id', authUsuario, (req: Request, res: Response) => { // READ
     // Ler informações sobre cliente com id específico:
     const { id } = req.params; 
     const clienteSelecionado = clientes.find(cliente => cliente.id === Number(id));
@@ -83,7 +92,7 @@ app.get('/clientes/:id', authUsuario, (req, res) => { // READ
 });
 
 
-app.put('/clientes/:id', authUsuario, (req, res) => { // UPDATE
+app.put('/clientes/:id', authUsuario, (req: Request, res: Response) => { // UPDATE
     // Procurar cliente pelo id:
     const { id } = req.params; 
     const clienteSelecionado = clientes.find(cliente => cliente.id === Number(id));
@@ -106,7 +115,7 @@ app.put('/clientes/:id', authUsuario, (req, res) => { // UPDATE
 });
 
 
-app.patch('/clientes/:id', authUsuario, (req, res) => { // UPDATE
+app.patch('/clientes/:id', authUsuario, (req: Request, res: Response) => { // UPDATE
     // Procurar cliente pelo id:
     const { id } = req.params; 
     const clienteSelecionado = clientes.find(cliente => cliente.id === Number(id));
@@ -125,7 +134,7 @@ app.patch('/clientes/:id', authUsuario, (req, res) => { // UPDATE
 });
 
 
-app.delete('/clientes/:id', authUsuario, (req, res) => { // DELETE
+app.delete('/clientes/:id', authUsuario, (req: Request, res: Response) => { // DELETE
     // Procurar cliente pelo id:
     const { id } = req.params; 
     const clienteIndex = clientes.findIndex(cliente => cliente.id === Number(id));
