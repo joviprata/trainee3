@@ -1,4 +1,4 @@
-# Tarefa 6 - Migração de JavaScript para TypeScript
+# Tarefa 6 - JavaScript para TypeScript
 Migração de códigos em Javascript usados no projeto desenvolvido na [Tarefa-5](https://github.com/joviprata/trainee3/tree/Joao-Victor-Prata/Joao-Victor-Prata/Tarefa-5) (um CRUD sobre entidade Clientes utilizando o Express) para TypeScript.<br/>
 Duas versões para o projeto foram feitas: [Stateless](https://github.com/joviprata/trainee3/tree/Tarefa-6-Joao-Victor-Prata/Joao-Victor-Prata/Tarefa-6/6.1-API-Stateless) e [Stateful](https://github.com/joviprata/trainee3/tree/Tarefa-6-Joao-Victor-Prata/Joao-Victor-Prata/Tarefa-6/6.2-API-Stateful).<br/>
 
