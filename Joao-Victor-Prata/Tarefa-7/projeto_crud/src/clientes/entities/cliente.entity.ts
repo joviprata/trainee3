@@ -1,6 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('clientes')
+@Entity('clientes') // Nome da tabela
 export class Cliente {
   @PrimaryGeneratedColumn()
   id: number;
@@ -8,6 +8,6 @@ export class Cliente {
   @Column()
   nome: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 }
