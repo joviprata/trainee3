@@ -5,22 +5,22 @@ import { UpdateClienteDto } from './dto/update-cliente.dto';
 @Injectable()
 export class ClientesService {
   create(createClienteDto: CreateClienteDto) {
-    return 'This action adds a new cliente';
+    return 'Esta ação adiciona um novo cliente';
   }
 
   findAll() {
-    return `This action returns all clientes`;
+    return `Esta ação lista todos os clientes`;
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} cliente`;
+    return `Esta ação retorna um cliente de id #${id}`;
   }
 
   update(id: number, updateClienteDto: UpdateClienteDto) {
-    return `This action updates a #${id} cliente`;
+    return `Esta ação atualiza um cliente de id #${id}`;
   }
 
   remove(id: number) {
-    return `This action removes a #${id} cliente`;
+    return `Esta ação remove um cliente de id #${id}`;
   }
 }
