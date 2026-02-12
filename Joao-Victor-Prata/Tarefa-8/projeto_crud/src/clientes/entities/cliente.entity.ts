@@ -1,13 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
-
-@Entity('clientes') // Nome da tabela
-export class Cliente {
-  @PrimaryGeneratedColumn()
+export interface Cliente {
   id: number;
-
-  @Column()
   nome: string;
-
-  @Column({ unique: true })
   email: string;
 }

@@ -3,39 +3,41 @@ import {
   ConflictException,
   NotFoundException,
 } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { Cliente } from './entities/cliente.entity';
 import { CreateClienteDto } from './dto/create-cliente.dto';
 import { UpdateClientePartialDto } from './dto/update-cliente-partial.dto';
 import { UpdateClienteFullDto } from './dto/update-cliente-full.dto';
+import { ClientesRepository } from './clientes.repository';
 
 @Injectable()
 export class ClientesService {
-  constructor(
-    @InjectRepository(Cliente)
-    private clienteRepository: Repository<Cliente>,
-  ) {}
+  constructor(private clienteRepository: ClientesRepository) {}
 
-  findAll(): Promise<Cliente[]> {
+  findAll(): Cliente[] {
     return this.clienteRepository.find();
   }
 
-  findOne(id: number): Promise<Cliente | null> {
-    return this.clienteRepository.findOneBy({ id });
+  findOne(id: number): Cliente {
+    const cliente = this.clienteRepository.findOneBy({ id });
+
+    if (!cliente) {
+      throw new NotFoundException('Cliente não encontrado');
+    }
+
+    return cliente;
   }
 
-  async remove(id: number): Promise<void> {
-    const resultado = await this.clienteRepository.delete(id);
+  remove(id: number): void {
+    const resultado = this.clienteRepository.delete(id);
 
     if (resultado.affected === 0) {
       throw new NotFoundException('Cliente não encontrado');
     }
   }
 
-  async create(createClienteDto: CreateClienteDto): Promise<Cliente> {
-    const existe = await this.clienteRepository.findOne({
-      where: { email: createClienteDto.email },
+  create(createClienteDto: CreateClienteDto): Cliente {
+    const existe = this.clienteRepository.findOneBy({
+      email: createClienteDto.email,
     });
 
     if (existe) {
@@ -46,21 +48,19 @@ export class ClientesService {
     return this.clienteRepository.save(cliente);
   }
 
-  async update(
+  update(
     id: number,
     updateClienteDto: UpdateClientePartialDto | UpdateClienteFullDto,
-  ): Promise<Cliente> {
-    const cliente = await this.clienteRepository.findOne({
-      where: { id },
-    });
+  ): Cliente {
+    const cliente = this.clienteRepository.findOneBy({ id });
 
     if (!cliente) {
       throw new NotFoundException('Não existe cliente com este id');
     }
 
     if (updateClienteDto.email) {
-      const emailEmUso = await this.clienteRepository.findOne({
-        where: { email: updateClienteDto.email },
+      const emailEmUso = this.clienteRepository.findOneBy({
+        email: updateClienteDto.email,
       });
 
       if (emailEmUso && emailEmUso.id !== id) {
