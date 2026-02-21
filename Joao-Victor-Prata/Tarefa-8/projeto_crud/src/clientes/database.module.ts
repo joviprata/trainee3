@@ -6,7 +6,7 @@ import Database from 'better-sqlite3';
     {
       provide: 'DB',
       useFactory: (): Database.Database => {
-        const db = new Database('fgv_tarefa8.db');
+        const db = new Database('fgv_tarefa7b.db');
 
         db.exec(`
           CREATE TABLE IF NOT EXISTS clientes (
