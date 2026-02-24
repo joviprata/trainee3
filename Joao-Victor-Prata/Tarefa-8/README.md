@@ -9,7 +9,7 @@ Abra o terminal e execute o seguinte comando:
 ```npx ts-node restaurante.ts```
 
 ## Análise do Código
-A function ```prepararRefeicao()``` retorna uma Promise - é prometido ao garçom que será estabelecida ("settled") para ele pelo menos uma resposta ao que foi exigido do cozinheiro - seja ```resolve``` indicando que foi possível preparar a refeição, ou ```reject``` indicando que não foi possível preparar a refeição por conta de um erro (neste caso sendo o fato de não se haver ingredientes para preparar o prato).<br/>
+A função ```prepararRefeicao()``` retorna uma Promise - é prometido ao garçom que será estabelecida ("settled") para ele pelo menos uma resposta ao que foi exigido do cozinheiro - seja ```resolve``` indicando que foi possível preparar a refeição, ou ```reject``` indicando que não foi possível preparar a refeição por conta de um erro (neste caso sendo o fato de não se haver ingredientes para preparar o prato).<br/>
 Para simular o tempo que leva para o cozinheiro preparar o prato, foi utilizado um ```setTimeout()``` de 2 segundos. Em um contexto de um projeto utilizando banco de dados, isto seria equivalente a um tempo de espera que levaria para obter dados do banco.
 
 A função ```servirRefeicao()``` foi declarada de forma assíncrona (```async```) pois não há como prever quanto tempo a refeição leva para ser preparada (neste caso são sempre 2 segundos, mas em casos reais com recursos e dados reais este tempo é imprevisível).<br/>
