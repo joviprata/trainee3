@@ -13,7 +13,7 @@ A função ```prepararRefeicao()``` retorna uma Promise - é prometido ao garço
 Para simular o tempo que leva para o cozinheiro preparar o prato, foi utilizado um ```setTimeout()``` de 2 segundos. Em um contexto de um projeto utilizando banco de dados, isto seria equivalente a um tempo de espera que levaria para obter dados do banco.
 
 A função ```servirRefeicao()``` foi declarada de forma assíncrona (```async```) pois não há como prever quanto tempo a refeição leva para ser preparada (neste caso são sempre 2 segundos, mas em casos reais com recursos e dados reais este tempo é imprevisível).<br/>
-Esta função tenta servir a refeição com sucesso (``` await prepararRefeicao(prato)```). Se a promessa da refeição for resolvida, então o prato é entregue ao cliente com sucesso.<br/>
+Esta função tenta servir a refeição com sucesso (```await prepararRefeicao(prato)```). Se a promessa da refeição for resolvida, então o prato é entregue ao cliente com sucesso.<br/>
 Caso contrário, um erro é gerado pela promessa, que é recebido pela função ```servirRefeicao()``` (```catch(erro)```), informando o erro especificado no ```reject``` da promessa (```"Está faltando ingredientes para preparar este prato."```).<br/>
 É importante ressaltar que este tipo de implementação ```try catch``` deve ser usado com bastante cautela em projetos reais, pois outros erros de implementação podem ocorrer no ```try``` e fazer com que o desenvolvedor equivocadamente assuma que este erro é necessariamente por conta que a Promise foi rejeitada. 
 
