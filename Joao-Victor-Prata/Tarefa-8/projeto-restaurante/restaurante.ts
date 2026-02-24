@@ -2,7 +2,7 @@ function prepararRefeicao(prato: string): Promise<string>  {
     return new Promise((resolve, reject) =>  {
         const temIngredientes = true;
 
-        console.log("Preparando a refeição...");
+        console.log("Levando pedido para a cozinha...");
         
         setTimeout(() => {
             if (temIngredientes) {
