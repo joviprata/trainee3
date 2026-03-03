@@ -4,12 +4,15 @@ import {
   Post,
   Body,
   Patch,
+  Put,
   Param,
   Delete,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ClientesService } from './clientes.service';
 import { CreateClienteDto } from './dto/create-cliente.dto';
-import { UpdateClienteDto } from './dto/update-cliente.dto';
+import { UpdateClientePartialDto } from './dto/update-cliente-partial.dto';
+import { UpdateClienteFullDto } from './dto/update-cliente-full.dto';
 
 @Controller('clientes')
 export class ClientesController {
@@ -31,8 +34,19 @@ export class ClientesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateClienteDto: UpdateClienteDto) {
-    return this.clientesService.update(+id, updateClienteDto);
+  updatePartial(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() UpdateClientePartialDto: UpdateClientePartialDto,
+  ) {
+    return this.clientesService.update(id, UpdateClientePartialDto);
+  }
+
+  @Put(':id')
+  updateFull(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateClienteFullDto: UpdateClienteFullDto,
+  ) {
+    return this.clientesService.update(id, updateClienteFullDto);
   }
 
   @Delete(':id')

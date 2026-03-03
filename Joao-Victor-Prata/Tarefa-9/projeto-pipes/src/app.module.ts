@@ -14,7 +14,7 @@ import { Cliente } from './clientes/entities/cliente.entity';
       port: 5432,
       username: 'postgres',
       password: 'pg123',
-      database: 'fgv_tarefa.db',
+      database: 'fgv_tarefa',
       entities: [Cliente],
       synchronize: true,
     }),
