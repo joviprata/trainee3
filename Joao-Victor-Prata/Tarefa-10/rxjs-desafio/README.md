@@ -8,7 +8,8 @@ Para instalar e rodar este projeto, clone este repositório e navegue para a pas
 ## Descrição das Streams
 [...]
 
-# ...
+# Operador escolhido (Etapa 3.1): combineLatest
+O operador combineLatest foi escolhido para implementação da stream painelEntregador$. 
 
 # ...
 

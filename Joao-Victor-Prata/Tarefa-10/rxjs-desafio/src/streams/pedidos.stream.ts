@@ -1,37 +1,34 @@
-import { interval, take, map } from 'rxjs';
+import { interval, take, map, scan } from 'rxjs';
+import { gerarPedido } from '../utils/simulador.js';
 
-function pegarAleatorio<T>(arr: T[]): T | undefined {
-  const randomIndex = Math.floor(Math.random() * arr.length);
-  return arr[randomIndex];
-}
-
-const statusPedido = ['coletado', 'em_rota', 'entregue', 'falhou']
-
-const pedido$ = interval(2000).pipe( 
+export const pedidos$ = interval(2000).pipe( 
   take(5),
-  map(() => {
-    const numPedido = Math.floor(Math.random() * 999999999) + 1;
-    const numEntregador = Math.floor(Math.random() * 999) + 1;
-
-    return {
-      pedidoId: `PED-${numPedido.toString().padStart(14, '0')}`,
-      status: pegarAleatorio(statusPedido),
-      entregadorId: `ENT-${numEntregador.toString().padStart(3, '0')}`,
-      timestamp: new Date(),
-    };
-  })
+  map(() => gerarPedido())
 );
 
-pedido$.subscribe({
-  next: (dadosPedido) => {
-    console.log('[next]:', dadosPedido);
-  },
+// export const statusCount$ = pedidos$.pipe(
+//   scan((acc, pedido) => acc + 1),
 
-  error: (err) => {
-    console.log('[error]:', err);
-  },
+//   map((totalColetado) => {
+//     return {
+//       coletado: totalColetado,
+//       em_rota: 0,
+//       entregue: 0,
+//       falhou: 0
+//     }
+//   })
+// )
 
-  complete: () => {
-    console.log('[complete]');
-  }
-});
+// statusCount$.subscribe({
+//   next: (dadosPedido) => {
+//     console.log('[STATUSCOUNT][next]:', dadosPedido);
+//   },
+
+//   error: (err) => {
+//     console.log('[error]:', err);
+//   },
+
+//   complete: () => {
+//     console.log('[complete]');
+//   }
+// });
