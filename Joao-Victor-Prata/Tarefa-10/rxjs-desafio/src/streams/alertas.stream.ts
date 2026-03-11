@@ -1,33 +1,37 @@
-import { interval, take } from 'rxjs';
+import { interval, take, map } from 'rxjs';
 
 function pegarAleatorio<T>(arr: T[]): T | undefined {
   const randomIndex = Math.floor(Math.random() * arr.length);
   return arr[randomIndex];
 }
 
-const alerta$ = interval((3 + (Math.random() * 5)) * 1000);
+const tipoAlerta = ['atraso', 'veiculo_parado', 'rota_desviada'];
+const severidadeAlerta = ['baixa', 'media', 'alta'];
 
-alerta$.subscribe({
-  next: () => {
-
+const alerta$ = interval((3 + (Math.random() * 5)) * 1000).pipe(
+  take(5),
+  map(() => {
     const numEntregador = Math.floor(Math.random() * 999) + 1;
 
-    const dadosAlerta = {
-      tipo: pegarAleatorio(['atraso', 'veiculo_parado', 'rota_desviada']),
+    return {
+     tipo: pegarAleatorio(tipoAlerta),
       entregadorId: `ENT-${numEntregador.toString().padStart(3, '0')}`,
-      mensagem: 'string',
-      severidade: pegarAleatorio(['baixa', 'media', 'alta']),
+      mensagem: 'ALERTA',
+      severidade: pegarAleatorio(severidadeAlerta),
     };
+  })    
+);
 
-    console.log('[next]: ', dadosAlerta);
+alerta$.subscribe({
+  next: (dadosAlerta) => {
+    console.log('[next]:', dadosAlerta);
   },
 
   error: (err) => {
-    console.log('[error]: ', err);
+    console.log('[error]:', err);
   },
 
   complete: () => {
     console.log('[complete]');
   }
-
 });
