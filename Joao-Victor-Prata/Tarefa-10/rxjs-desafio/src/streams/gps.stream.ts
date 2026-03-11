@@ -1,18 +1,21 @@
-import { interval, take, map, filter } from 'rxjs';
+import { interval, map, filter } from 'rxjs';
 import { gerarGPS } from '../utils/simulador.js';
+import { logComTimestamp } from '../operadores/custom_operadores.js';
 
 export const gps$ = interval(1000).pipe(
-  take(5),
-  map(() => gerarGPS())
+  map(() => gerarGPS()),
+  logComTimestamp('GPS'),
 );
 
 export const velocidadeSuspeita$ = gps$.pipe(
-  filter(gps => gps.velocidade > 60)
+  filter(gps => gps.velocidade > 60),
+  logComTimestamp('VELOCIDADE_SUSPEITA')
 );
 
 export const gpsEnriquecido$ = gps$.pipe(
   map((gps) => ({
     ...gps,
     regiao: gps.lat > 0 ? 'Norte' : 'Sul'
-  }))
+  })),
+  logComTimestamp('GPS_ENRIQUECIDO')
 );

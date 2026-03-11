@@ -1,3 +1,4 @@
+import { logComTimestamp } from '../operadores/custom_operadores.js';
 import { gps$ } from './gps.stream.js';
 import { pedidos$ } from './pedidos.stream.js';
 
@@ -8,5 +9,7 @@ export const painelEntregador$ = combineLatest([gps$, pedidos$]).pipe(
     return {
       entregadorId: gps.entregador
     }
-  })
+  }),
+
+  logComTimestamp('PAINEL_ENTREGADOR')
 )

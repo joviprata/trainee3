@@ -1,34 +1,38 @@
-import { interval, take, map, scan } from 'rxjs';
+import {
+  interval,
+  map,
+  retry,
+  of,
+  catchError,
+  scan,
+} from 'rxjs';
 import { gerarPedido } from '../utils/simulador.js';
+import { logComTimestamp } from '../operadores/custom_operadores.js';
 
-export const pedidos$ = interval(2000).pipe( 
-  take(5),
-  map(() => gerarPedido())
+export const pedidos$ = interval(2000).pipe(
+  map(() => {
+    if (Math.random() <= 0.1) {
+      throw new Error('Falha na comunicação com o servidor');
+    }
+    return gerarPedido();
+  }),
+
+  retry(3),
+
+  catchError((err) => {
+    return of({
+      status: 'erro',
+      mensagem: err.message
+    });
+  }),
+
+  logComTimestamp('PEDIDOS')
 );
 
-// export const statusCount$ = pedidos$.pipe(
-//   scan((acc, pedido) => acc + 1),
-
-//   map((totalColetado) => {
-//     return {
-//       coletado: totalColetado,
-//       em_rota: 0,
-//       entregue: 0,
-//       falhou: 0
-//     }
-//   })
-// )
-
-// statusCount$.subscribe({
-//   next: (dadosPedido) => {
-//     console.log('[STATUSCOUNT][next]:', dadosPedido);
-//   },
-
-//   error: (err) => {
-//     console.log('[error]:', err);
-//   },
-
-//   complete: () => {
-//     console.log('[complete]');
-//   }
-// });
+export const statusCount$ = pedidos$.pipe(
+  scan((acc, pedido) => {
+    acc[pedido.status] = (acc[pedido.status] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>),
+  logComTimestamp('STATUS_COUNT')
+);

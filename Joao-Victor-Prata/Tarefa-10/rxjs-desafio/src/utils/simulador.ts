@@ -1,8 +1,8 @@
 // Função auxiliar (pega elemento aleatório de um array):
 
-function pegarAleatorio<T>(arr: T[]): T | undefined {
+function pegarAleatorio<T>(arr: T[]): T {
   const randomIndex = Math.floor(Math.random() * arr.length);
-  return arr[randomIndex];
+  return arr[randomIndex]!;
 }
 
 // Gerar Alerta:
