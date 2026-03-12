@@ -1,6 +1,6 @@
 import { interval, map, filter } from 'rxjs';
-import { gerarAlerta } from '../utils/simulador.js';
-import { logComTimestamp } from '../operadores/custom_operadores.js';
+import { gerarAlerta } from '../utils/simulador';
+import { logComTimestamp } from '../operadores/custom_operadores';
 
 export const alertas$ = interval((3 + (Math.random() * 5)) * 1000).pipe(
   map(() => gerarAlerta()),

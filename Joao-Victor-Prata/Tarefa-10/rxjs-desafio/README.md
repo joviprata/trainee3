@@ -3,11 +3,20 @@
 Implementação de um pipeline reativo completo com Observables, operadores e tratamento de erros.
 
 ## Como rodar o projeto
-Para instalar e rodar este projeto, clone este repositório e navegue para a pasta do projeto ([rxjs-desafio](https://github.com/joviprata/trainee3/tree/Tarefa-10-Joao-Victor-Prata/Joao-Victor-Prata/Tarefa-10/rxjs-desafio)). Rode o seguinte comando no terminal:
+Para instalar e rodar este projeto, clone este repositório e navegue para a pasta do projeto ([rxjs-desafio](https://github.com/joviprata/trainee3/tree/Tarefa-10-Joao-Victor-Prata/Joao-Victor-Prata/Tarefa-10/rxjs-desafio)). Instale as dependências rodando o seguinte comando no terminal:
+
 
 ```bash
-npx tsx src/main.ts
+npm install
 ```
+
+Em seguida, rode o seguinte comando no terminal para iniciar o projeto:
+
+```bash
+npm start
+```
+
+Todas as streams são canceladas após 30 segundos de execução, encerrando em seguida a aplicação.
 
 ## Descrição das Streams
 As seguintes streams foram implementadas: 
@@ -32,10 +41,20 @@ severidade: 'media' | 'alta'
 - `emergencia$`: informa emergências (alertas de alta severidade, cujo entregador estava dirigindo com velocidade superior a 60 km/h de acordo com o gps).
 
 ```bash
-tipo: 'atraso' | 'veiculo_parado' | 'rota_desviada',
 entregadorId: string,
-mensagem: string,
-severidade: 'media' | 'alta'
+alerta: {
+  tipo: string,
+  entregadorId: string,
+  mensagem: string,
+  severidade: 'alta'
+},
+gps: {
+  entregadorId: string,
+  lat: number,
+  lng: number,
+  velocidade: number,
+  timestamp: Date
+}
 ```
 
 - `gps$`: informa localização, data, horário e velocidade de um entregador.
@@ -101,14 +120,30 @@ falhou?: number
 ```
 
 # Operador escolhido na Etapa 3.1 (Painel do Entregador): combineLatest
-O operador combineLatest foi escolhido para implementação da stream painelEntregador$. Determinada lógica foi aplicada:<br/>
-- Se um entregador for captado pelo GPS mas não pelos Pedidos,  
+O operador `combineLatest` foi escolhido para implementação da stream `painelEntregador$`. Esse operador permite combinar as emissões das streams `gps$` e `pedidos$`, sempre fornecendo o valor mais recente de cada uma delas. <br/>
+Para impedir que o painel do entregador exiba dados obtidos do GPS de um entregador mesclados com dados de pedido de outro entregador, um filtro foi aplicado, garantindo que `gps.entregadorId === pedido.entregadorId`. Observa-se que esta abordagem faz com que haja poucas emissões do painel do entregador, visto que não é garantido que o último pedido seja do último entregador e vice-versa. Em um projeto mais avançado uma abordagem melhor poderia ser estruturar persistência de dados (preservar o histórico das emissões) e não deixar que dados sejam fortemente filtrados por recência.
 
 # Resolução para Etapa 3.2 (Dashboard de Emergência)
-Para resolver a etapa 3.2, 
+Para resolver a etapa 3.2, foi aplicada a seguinte lógica:
 
-# Dificuldade enfrentada
-Uma dificuldade enfrentada ao implementar foi com a ordem de chamada dos operadores. O `logComTimestamp` teve que ser movido para o final, depois dos operadores `map()`, pois caso contrário ele estaria printando o valor emitido pelo operador `interval()`, ao invés de printar o valor transformado no pipeline. Fazendo esta alteração, no entanto, gerou erros de tipagem nos streams derivados (por exemplo `velocidadeSuspeita$`, derivado de `gps$`). Para preservar o tipo dos streams e evitar tratamento desorganizado de dados, foi importada `MonoTypeOperatorFunction` de `rxjs` em `custom_operadores.ts`, e declarado que o operador `logComTimestamp` não altera o tipo do stream.
+A stream `emergencia$` pode ser acionada por duas condições:
+
+- Ou um alerta de severidade 'alta' é emitido (alerta filtrado, com `alerta.severidade === 'alta'`);
+- Ou um entregador tem velocidade superior a 60km/h (qualquer emissão de `velocidadeSuspeita$` pois essa stream já é o gps filtrado).
+
+No momento em que uma das condições ocorrem, é iniciado um intervalo de 5 segundos.<br/>
+Dentro deste intervalo, um filtro é aplicado:
+
+- Seja para receber somente dados de gps com velocidade superior a 60km/h (quando o alerta acionou o intervalo);
+- Ou, seja para receber somente dados de alerta de severidade 'alta' (quando o gps acionou o intervalo).
+
+Se receber um dado dos dois até a finalização do intervalo e se o `entregadorId` é o mesmo para as duas emissões, a stream emite os dados mesclados.<br/>
+Se não receber nenhum dos dois até a finalização do intervalo, a stream é desativada, esperando ser iniciada novamente por uma das condições.
+
+# Dificuldades enfrentadas
+Uma dificuldade enfrentada ao implementar foi com a ordem de chamada dos operadores. O `logComTimestamp` teve que ser movido para o final, depois dos operadores `map()`, pois caso contrário ele estaria printando o valor emitido pelo operador `interval()`, ao invés de printar o valor transformado no pipeline. Fazendo esta alteração, no entanto, gerou erros de tipagem nos streams derivados (por exemplo `velocidadeSuspeita$`, derivado de `gps$`). Para preservar o tipo dos streams e evitar tratamento desorganizado de dados, foi utilizado o tipo `MonoTypeOperatorFunction` do RxJS em `custom_operadores.ts`, e declarado que o operador `logComTimestamp` não altera o tipo do stream.
+
+Outra dificuldade enfrentada foi ao aplicar o filtro usando `pedido.entregadorId` na implementação de `painelEntregador$`. Como `pedidos$` pode emitir tanto dados de pedidos devidamente formatados quanto objetos de erro no formato `{ status: 'erro', mensagem: err.message }` (quando ocorre uma falha de comunicação com o servidor), foi necessário implementar um **Type Guard**, que permite ao TypeScript tratar corretamente os dados usados no filtro. Uma função `isPedido()` foi criada, que verifica se o objeto emitido representa um pedido válido (ou seja, não possui `status: 'erro'` e contém a propriedade `entregadorId`).
 
 # Observações
-A propriedade next() das subscriptions em `main.ts` não possui `console.log(`[${nome}]`, dados);` pois o resultado jé é exibido pelo operador `logComTimestamp`. Para evitar redundância de logs e manter a saída do console mais clara, esse `console.log` foi removido da main.
+A função next() das subscriptions em `main.ts` não possui `console.log(`[${nome}]`, dados);` pois o resultado já é exibido pelo operador `logComTimestamp`. Para evitar redundância de logs e manter a saída do console mais clara, esse `console.log` foi removido da main.

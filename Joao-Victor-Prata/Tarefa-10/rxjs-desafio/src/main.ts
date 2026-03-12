@@ -1,8 +1,10 @@
 import { Subject, takeUntil } from 'rxjs';
 
-import { alertas$, alertasCriticos$ } from './streams/alertas.stream.js';
-import { gps$, velocidadeSuspeita$, gpsEnriquecido$ } from './streams/gps.stream.js';
-import { pedidos$, statusCount$ } from './streams/pedidos.stream.js';
+import { alertas$, alertasCriticos$ } from './streams/alertas.stream';
+import { emergencia$ } from './streams/dashboard_emergencia.stream';
+import { gps$, velocidadeSuspeita$, gpsEnriquecido$ } from './streams/gps.stream';
+import { painelEntregador$ } from './streams/painel_entregador.stream';
+import { pedidos$, statusCount$ } from './streams/pedidos.stream';
 
 const destroy$ = new Subject<void>();
 
@@ -23,19 +25,23 @@ function subscribeStream(nome: string, stream$: any) {
 }
 
 
-// registrar todos os streams
+// Registrar todos os streams
 subscribeStream('alertas$', alertas$);
 subscribeStream('alertasCriticos$', alertasCriticos$);
+
+subscribeStream('emergencia$', emergencia$);
 
 subscribeStream('gps$', gps$);
 subscribeStream('velocidadeSuspeita$', velocidadeSuspeita$);
 subscribeStream('gpsEnriquecido$', gpsEnriquecido$);
 
+subscribeStream('painelEntregador$', painelEntregador$);
+
 subscribeStream('pedidos$', pedidos$);
 subscribeStream('statusCount$', statusCount$);
 
 setTimeout(() => {
-  
+
   destroy$.next();
   destroy$.complete();
 

@@ -6,8 +6,8 @@ import {
   catchError,
   scan,
 } from 'rxjs';
-import { gerarPedido } from '../utils/simulador.js';
-import { logComTimestamp } from '../operadores/custom_operadores.js';
+import { gerarPedido } from '../utils/simulador';
+import { logComTimestamp } from '../operadores/custom_operadores';
 
 export const pedidos$ = interval(2000).pipe(
   map(() => {

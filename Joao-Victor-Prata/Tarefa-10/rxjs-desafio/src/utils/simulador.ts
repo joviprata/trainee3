@@ -1,9 +1,11 @@
+
 // Função auxiliar (pega elemento aleatório de um array):
 
 function pegarAleatorio<T>(arr: T[]): T {
   const randomIndex = Math.floor(Math.random() * arr.length);
   return arr[randomIndex]!;
 }
+
 
 // Gerar Alerta:
 
@@ -22,7 +24,7 @@ export function gerarAlerta() {
 }
 
 
-// GerarGPS:
+// Gerar GPS:
 
 export function gerarGPS() {
   const numEntregador = Math.floor(Math.random() * 999) + 1;
@@ -37,7 +39,7 @@ export function gerarGPS() {
 }
 
 
-// GerarPedido:
+// Gerar Pedido:
 
 const statusPedido = ['coletado', 'em_rota', 'entregue', 'falhou']
 
@@ -51,4 +53,17 @@ export function gerarPedido() {
     entregadorId: `ENT-${numEntregador.toString().padStart(3, '0')}`,
     timestamp: new Date(),
   };
+}
+
+// Garantir estrutura certa para o pedido ser filtrado em painelEntregador$:
+interface Pedido {
+  pedidoId: string;
+  status: string;
+  entregadorId: string;
+  timestamp: Date;
+}
+
+// Função Type Guard do Pedido:
+export function isPedido(pedido: any): pedido is Pedido {
+  return pedido && pedido.status !== 'erro' && 'entregadorId' in pedido;
 }
