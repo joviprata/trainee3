@@ -1,5 +1,6 @@
 import {
   interval,
+  mergeMap,
   map,
   retry,
   of,
@@ -10,15 +11,18 @@ import { gerarPedido } from '../utils/simulador';
 import { logComTimestamp } from '../operadores/custom_operadores';
 
 export const pedidos$ = interval(2000).pipe(
-  map(() => {
-    if (Math.random() <= 0.1) {
-      throw new Error('Falha na comunicação com o servidor');
-    }
-    return gerarPedido();
-  }),
-
+  mergeMap(() =>
+    of(null).pipe(
+      mergeMap(() => {
+        if (Math.random() <= 0.1) {
+          throw new Error('Falha na comunicação com o servidor');
+        }
+        return of(gerarPedido());
+      }),
+    )),
+  
   retry(3),
-
+  
   catchError((err) => {
     return of({
       status: 'erro',
