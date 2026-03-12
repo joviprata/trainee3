@@ -56,6 +56,7 @@ export function gerarPedido() {
 }
 
 // Garantir estrutura certa para o pedido ser filtrado em painelEntregador$:
+
 interface Pedido {
   pedidoId: string;
   status: string;
@@ -64,6 +65,7 @@ interface Pedido {
 }
 
 // Função Type Guard do Pedido:
+
 export function isPedido(pedido: any): pedido is Pedido {
   return pedido && pedido.status !== 'erro' && 'entregadorId' in pedido;
 }

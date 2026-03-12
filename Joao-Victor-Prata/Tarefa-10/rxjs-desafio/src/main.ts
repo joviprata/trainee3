@@ -8,7 +8,8 @@ import { pedidos$, statusCount$ } from './streams/pedidos.stream';
 
 const destroy$ = new Subject<void>();
 
-// Contador de eventos
+// Contador de eventos:
+
 const resumo: Record<string, number> = {};
 
 function subscribeStream(nome: string, stream$: any) {
@@ -25,7 +26,8 @@ function subscribeStream(nome: string, stream$: any) {
 }
 
 
-// Registrar todos os streams
+// Registrar todas as streams:
+
 subscribeStream('alertas$', alertas$);
 subscribeStream('alertasCriticos$', alertasCriticos$);
 
