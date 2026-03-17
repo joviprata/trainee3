@@ -1,5 +1,6 @@
 import {
   filter,
+  share,
   mergeMap,
   take,
   timer,
@@ -12,7 +13,8 @@ import { velocidadeSuspeita$ } from "./gps.stream";
 import { logComTimestamp } from "../operadores/custom_operadores";
 
 const alertasAlta$ = alertas$.pipe(
-  filter(alerta => alerta.severidade === 'alta')
+  filter(alerta => alerta.severidade === 'alta'),
+  share()
 );
 
 const alertaParaGps$ = alertasAlta$.pipe(
