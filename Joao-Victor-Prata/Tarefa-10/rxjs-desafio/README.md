@@ -94,7 +94,7 @@ regiao: 'Norte' | 'Sul'
  {
 entregadorId: string,
 ultimaLocalizacao: { lat, lng, velocidade },
-ultimoStatus: string,
+ultimoStatus: coletado' | 'em_rota' | 'entregue' | 'falhou',
 ultimaAtualizacao: Date
 }
 ```
