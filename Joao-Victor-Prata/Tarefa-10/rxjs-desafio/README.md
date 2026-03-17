@@ -91,12 +91,10 @@ regiao: 'Norte' | 'Sul'
 - `painelEntregador$`: informa dados mais recentes de um entregador (GPS + pedidos).
 
 ```bash
- {
 entregadorId: string,
 ultimaLocalizacao: { lat, lng, velocidade },
 ultimoStatus: coletado' | 'em_rota' | 'entregue' | 'falhou',
 ultimaAtualizacao: Date
-}
 ```
 
 - `pedidos$`: informa dados de pedido realizado por um cliente.
