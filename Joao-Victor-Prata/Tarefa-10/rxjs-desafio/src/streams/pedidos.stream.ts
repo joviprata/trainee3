@@ -6,6 +6,7 @@ import {
   of,
   catchError,
   scan,
+  share,
 } from 'rxjs';
 import { gerarPedido } from '../utils/simulador';
 import { logComTimestamp } from '../operadores/custom_operadores';
@@ -30,7 +31,8 @@ export const pedidos$ = interval(2000).pipe(
     });
   }),
 
-  logComTimestamp('PEDIDOS')
+  logComTimestamp('PEDIDO'),
+  share()
 );
 
 export const statusCount$ = pedidos$.pipe(

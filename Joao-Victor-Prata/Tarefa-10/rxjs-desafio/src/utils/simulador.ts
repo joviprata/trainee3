@@ -7,13 +7,19 @@ function pegarAleatorio<T>(arr: T[]): T {
 }
 
 
+// Quantidade máxima de entregadores e pedidos:
+
+const maxEntregadores = 999;
+const maxPedidos = 999999999;
+
+
 // Gerar Alerta:
 
 const tipoAlerta = ['atraso', 'veiculo_parado', 'rota_desviada'];
 const severidadeAlerta = ['baixa', 'media', 'alta'];
 
 export function gerarAlerta() {
-  const numEntregador = Math.floor(Math.random() * 999) + 1;
+  const numEntregador = Math.floor(Math.random() * maxEntregadores) + 1;
 
   return {
     tipo: pegarAleatorio(tipoAlerta),
@@ -27,7 +33,7 @@ export function gerarAlerta() {
 // Gerar GPS:
 
 export function gerarGPS() {
-  const numEntregador = Math.floor(Math.random() * 999) + 1;
+  const numEntregador = Math.floor(Math.random() * maxEntregadores) + 1;
 
   return {
     entregadorId: `ENT-${numEntregador.toString().padStart(3, '0')}`,
@@ -44,8 +50,8 @@ export function gerarGPS() {
 const statusPedido = ['coletado', 'em_rota', 'entregue', 'falhou']
 
 export function gerarPedido() {
-  const numPedido = Math.floor(Math.random() * 999999999) + 1;
-  const numEntregador = Math.floor(Math.random() * 999) + 1;
+  const numPedido = Math.floor(Math.random() * maxPedidos) + 1;
+  const numEntregador = Math.floor(Math.random() * maxEntregadores) + 1;
 
   return {
     pedidoId: `PED-${numPedido.toString().padStart(14, '0')}`,
