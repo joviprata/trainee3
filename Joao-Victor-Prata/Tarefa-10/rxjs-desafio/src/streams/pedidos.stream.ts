@@ -1,7 +1,6 @@
 import {
   interval,
   mergeMap,
-  map,
   retry,
   of,
   catchError,
