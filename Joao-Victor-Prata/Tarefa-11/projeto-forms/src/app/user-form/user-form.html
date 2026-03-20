@@ -1,0 +1,38 @@
+<form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+  <h2>Login</h2>
+
+  <div>
+    <label for="email">Email</label>
+    <input
+      id="email"
+      type="email"
+      name="email"
+      ngModel
+      required
+      email
+      #email="ngModel"
+    />
+  </div>
+
+  <div>
+    <label for="password">Senha</label>
+    <input
+      id="password"
+      type="email"
+      name="password"
+      ngModel
+      required
+      minlength="6"
+      maxlength="55"
+      #password="ngModel"
+      />
+  </div>
+  <button class="button">Login</button>
+
+  @if (email.touched && password.touched && userForm.form.invalid){
+    <p class="control-error">
+      Blablabla
+    </p>
+  }
+
+</form>
