@@ -1,6 +1,4 @@
 <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
-  <h2>Login</h2>
-
   <div>
     <label for="email">Email</label>
     <input
@@ -29,10 +27,18 @@
   </div>
   <button class="button">Login</button>
 
-  @if (email.touched && password.touched && userForm.form.invalid){
+  @if (email.touched && email.dirty && email.invalid){
     <p class="control-error">
-      Blablabla
+      E-mail inválido. Por favor, tente novamente. 
     </p>
   }
+
+  @if (password.touched && password.dirty && password.invalid){
+    <p class="control-error">
+      Senha inválida. Por favor, tente novamente. 
+    </p>
+  }
+
+  
 
 </form>
