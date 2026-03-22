@@ -9,10 +9,8 @@ import { FormsModule, NgForm } from '@angular/forms';
   styleUrl: './user-form.css',
 })
 export class UserForm {
+
   onSubmit(dadosForm: NgForm) {
-    if (dadosForm.form.invalid) {
-      return;
-    }
 
     const email = dadosForm.form.value.email
     const senha = dadosForm.form.value.senha

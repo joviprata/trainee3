@@ -6,14 +6,14 @@
 
 body {
   background-color: #b2cedb;
-  margin-top: 0;
+  margin: 0;
 }
 
 h1 {
   font-size: 1.5rem;
   font-weight: 600;
   color: #0E0D0B;
-  margin: 0 0 0 1rem;
+  margin: 0 0 0 1.5rem;
   padding-top: 1rem;
 }
 
@@ -21,12 +21,72 @@ p {
   font-size: 1.1rem;
   font-weight: 600;
   color: #47474A;
-  margin: 0 0 0 1rem;
+  margin: 0 0 0 1.5rem;
 }
 
 .page {
   background-color: #F1F1F0;
   max-width: 60rem;
   margin: 0 auto;
-  min-height: 100vh;
+  min-height: 70rem;
+}
+
+.text-input {
+  display: block;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  border: 2px solid #e7ecf0;
+  color: #0E0D0B;
+  width: 50%;
+  height: 2.5rem;
+  outline: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+
+  &:focus-within {
+    border-color: #068fff;
+    border-width: 1.5px;
+    box-shadow: 0 0 0 4px #dfeefa;
+  }
+  
+  &::placeholder {
+    color: #8697ac;
+    opacity: 1;
+  }
+  
+  padding-left: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.control-error {
+  color: #D7262F;
+}
+
+.button {
+    display: block; 
+    width: 25%;
+    height: 2.5rem;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    border: none;
+    outline: none;
+    background-color: #1C3C75;
+    color: #ffffff;
+    transition: background-color 0.1s, color 0.1s;
+    margin: 3rem 0 0 0;
+  }
+
+.button:hover {
+    background-color: #1664AB;
+  }
+
+.button:active {
+  background-color: #72BDE8;
+  color: #000;
+}
+
+.button:disabled {
+  background-color: #F1F1F0;
+  border: 2px solid #DFDFDC;
+  color: #616977;
 }
