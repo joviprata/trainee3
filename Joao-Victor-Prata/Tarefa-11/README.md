@@ -17,7 +17,7 @@ npm start
 ```
 
 <p align="center">
-  <img width="1920" height="1080" alt="Resultado Form" src="https://github.com/user-attachments/assets/15387441-e49f-4dce-9091-f8900554ab69" />
+  <img width="1920" height="1080" alt="Resultado Form" src="https://github.com/user-attachments/assets/5a68c4c8-d263-480e-8964-cf387d238d79" />
 </p>
 <p align="center">
   <img width="1920" height="1080" alt="Form Parte 2" src="https://github.com/user-attachments/assets/61629fc0-feb8-45cd-810d-631a96e0f21f" />
