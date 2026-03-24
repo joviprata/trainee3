@@ -88,9 +88,6 @@ export class UserForm {
     event.target.value = value;
   }
 
-  showPassword = false;
-  showConfirmPassword = false;
-
   ordemOriginalForm = () => 0;
 
   dadosSalvos: any = null;
