@@ -35,7 +35,6 @@
         required
         maxlength="14"
         (input)="formatCPF($event)"
-        pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
         #cpf="ngModel"
       />
 
@@ -98,7 +97,6 @@
         ngModel
         required
         (input)="formatCEP($event)"
-        pattern="\d{5}-\d{3}"
         maxlength="9"
         #cep="ngModel"
       />
@@ -119,7 +117,6 @@
         ngModel
         required
         (input)="formatTelefone($event)"
-        pattern="\(\d{2}\) \d{4,5}-\d{4}"
         minlength="14"
         maxlength="15"
         #telefone="ngModel"
@@ -150,7 +147,7 @@
         #email="ngModel"
       />
 
-      @if (email.touched && email.invalid){
+      @if (email.touched && email.dirty && email.invalid){
         <p class="control-error">
           E-mail inválido. Por favor, tente novamente. 
         </p>
