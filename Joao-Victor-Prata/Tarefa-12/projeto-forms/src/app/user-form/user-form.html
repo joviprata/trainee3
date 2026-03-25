@@ -1,21 +1,56 @@
-@if (!dadosSalvos) {
+@if (!savedUserData) {
   <div class="form-text">
     <h1>Complete seus dados</h1>
     <p>Preencha seus dados pessoais para realizar seu cadastro.</p>
   </div>
 
-  <form>
-      <button>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+    <label class="label required">Nome completo</label>
+    <input
+      class="text-input"
+      id="nome"
+      type="text"
+      placeholder="Seu nome completo"
+      formControlName="nome"
+    />
+
+    @if (nameIsInvalid) {
+      <p class="control-error">
+        Por favor, insira seu nome completo.
+      </p>
+    }
+
+    <label class="label required">E-mail</label>
+    <input
+      class="text-input"
+      id="email"
+      type="email"
+      placeholder="seuemail@exemplo.com"
+      formControlName="email"
+    />
+
+    @if (emailIsInvalid) {
+      <p class="control-error">
+        E-mail inválido. Por favor, tente novamente. 
+      </p>
+    }
+
+
+
+
+    <button type="submit" class="button">
       Enviar
-      </button>
+    </button>
   </form>
 
 } @else {
   <div class="result">
     <h1>Dados enviados com sucesso!</h1>
+      <p>{{ savedUserData | json }}</p>
   </div>
 
-  <button>
+  <button class="button" (click)="onReset()">
     Fazer outro envio
   </button>
 }
