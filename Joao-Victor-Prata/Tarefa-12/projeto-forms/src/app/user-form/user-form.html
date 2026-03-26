@@ -123,6 +123,7 @@
               type="button"
               class="array-button add"
               (click)="addRedeSocialPrompt()"
+              [disabled]="redesSociaisLength >= 10"
             >
               Adicionar
             </button>
@@ -143,9 +144,16 @@
         class="array-button add"
         style="margin-left: 1.5rem;"
         (click)="addRedeSocialPrompt()"
+        [disabled]="redesSociaisLength >= 10"
       >
         Adicionar
       </button>
+    }
+    
+    @if (redesSociaisLength >= 10) {
+      <p class="control-error">
+        Máximo de 10 redes sociais atingido.
+      </p>
     }
 
     <button type="submit" class="button" [disabled]="userForm.invalid">
