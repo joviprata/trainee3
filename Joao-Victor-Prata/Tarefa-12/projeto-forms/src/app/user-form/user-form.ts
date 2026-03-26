@@ -94,22 +94,32 @@ export class UserForm {
     event.target.value = value;
   }
 
+  get redesSociais() {
+    return this.userForm.controls.redesSociais as FormRecord<FormControl>;
+  }
+
+  get redesSociaisLength() {
+    return Object.keys(this.redesSociais.controls).length;
+  }
+
   addRedeSocial(nome: string) {
     this.userForm.controls.redesSociais.addControl(
       nome,
       new FormControl('', Validators.required)
     );
   }
-  
-  addRedeSocialPrompt() {
-  const nome = prompt('Nome da rede social (ex: instagram, twitter)');
-  if (!nome) return;
 
-  this.userForm.controls.redesSociais.addControl(
-    nome,
-    new FormControl('', Validators.required)
-  );
-}
+  addRedeSocialPrompt() {
+    if (this.redesSociaisLength >= 10) return;
+
+    const nome = prompt('Nome da rede social (ex: instagram, twitter)');
+    if (!nome) return;
+
+    this.redesSociais.addControl(
+      nome,
+      new FormControl('', Validators.required)
+    );
+  }
 
   savedUserData: any = null;
 
