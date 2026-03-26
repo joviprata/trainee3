@@ -4,14 +4,15 @@ import {
   FormGroup,
   Validators,
   FormArray,
-  FormControl
+  FormControl,
+  FormRecord,
 } from '@angular/forms';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, KeyValuePipe } from '@angular/common';
 
 @Component({
   selector: 'app-user-form',
   standalone: true,
-  imports: [ReactiveFormsModule, JsonPipe],
+  imports: [ReactiveFormsModule, JsonPipe, KeyValuePipe],
   templateUrl: './user-form.html',
   styleUrl: './user-form.css',
 })
@@ -36,8 +37,25 @@ export class UserForm {
           Validators.required, Validators.minLength(14), Validators.maxLength(15)
         ]
       })
-    ])
+    ]),
+
+    redesSociais: new FormRecord({})
   });
+
+  get nameIsInvalid() {
+    return (
+      this.userForm.controls.nome.touched &&
+      this.userForm.controls.nome.invalid
+    )
+  }
+
+  get emailIsInvalid() {
+    return (
+      this.userForm.controls.email.touched &&
+      this.userForm.controls.email.dirty &&
+      this.userForm.controls.email.invalid
+    );
+  }
 
   get telefones() {
     return this.userForm.controls.telefones as FormArray;
@@ -76,20 +94,22 @@ export class UserForm {
     event.target.value = value;
   }
 
-  get nameIsInvalid() {
-    return (
-      this.userForm.controls.nome.touched &&
-      this.userForm.controls.nome.invalid
-    )
-  }
-
-  get emailIsInvalid() {
-    return (
-      this.userForm.controls.email.touched &&
-      this.userForm.controls.email.dirty &&
-      this.userForm.controls.email.invalid
+  addRedeSocial(nome: string) {
+    this.userForm.controls.redesSociais.addControl(
+      nome,
+      new FormControl('', Validators.required)
     );
   }
+  
+  addRedeSocialPrompt() {
+  const nome = prompt('Nome da rede social (ex: instagram, twitter)');
+  if (!nome) return;
+
+  this.userForm.controls.redesSociais.addControl(
+    nome,
+    new FormControl('', Validators.required)
+  );
+}
 
   savedUserData: any = null;
 
