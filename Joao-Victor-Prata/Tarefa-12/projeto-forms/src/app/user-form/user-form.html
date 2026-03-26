@@ -13,6 +13,7 @@
       type="text"
       placeholder="Seu nome completo"
       formControlName="nome"
+      maxlength="255"
     />
 
     @if (nameIsInvalid) {
@@ -21,6 +22,7 @@
       </p>
     }
 
+
     <label class="label required">E-mail</label>
     <input
       class="text-input"
@@ -28,6 +30,7 @@
       type="email"
       placeholder="seuemail@exemplo.com"
       formControlName="email"
+      maxlength="255"
     />
 
     @if (emailIsInvalid) {
@@ -37,11 +40,66 @@
     }
 
 
+    <label class="label required">Telefone(s)</label>
 
+    <div formArrayName="telefones">
+      @for (telefone of telefones.controls; let i = $index; track i) {
+        <div class="telephone-row">
+          <input
+            class="text-input"
+            type="text"
+            [formControlName]="i"
+            placeholder="(00) 00000-0000"
+            maxlength="15"
+            (input)="formatTelephone($event);"
+          />
 
-    <button type="submit" class="button">
+          <button
+            type="button"
+            class="array-button remove"
+            (click)="removeTelephone(i)">
+            Remover
+          </button>
+
+          @if (i === telefones.length - 1) {
+            <button
+              type="button"
+              class="array-button add"
+              (click)="addTelephone()"
+              [disabled]="telefones.length >= 10 || hasInvalidTelephone"
+            >
+              Adicionar
+            </button>
+          }
+        </div>
+
+        @if (telefone.invalid && telefone.touched) {
+          <p class="control-error">
+            Telefone inválido. Por favor, tente novamente.
+          </p>
+        }
+      }
+    </div>
+    
+    @if (telefones.length === 0) {
+      <button
+        type="button"
+        class="array-button add"
+        style="margin-left: 1.5rem;"
+        (click)="addTelephone()">
+        Adicionar
+      </button>
+    }
+    @if (telefones.length >= 10) {
+      <p class="control-error">
+        Máximo de 10 telefones atingido.
+      </p>
+    }
+
+    <button type="submit" class="button" [disabled]="userForm.invalid">
       Enviar
     </button>
+
   </form>
 
 } @else {

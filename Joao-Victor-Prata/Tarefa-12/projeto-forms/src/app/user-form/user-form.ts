@@ -1,5 +1,11 @@
-import { Component, computed } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, Validators, FormArray, FormControl } from '@angular/forms';
+import { Component } from '@angular/core';
+import {
+  ReactiveFormsModule,
+  FormGroup,
+  Validators,
+  FormArray,
+  FormControl
+} from '@angular/forms';
 import { JsonPipe } from '@angular/common';
 
 @Component({
@@ -13,13 +19,62 @@ import { JsonPipe } from '@angular/common';
 export class UserForm {
   userForm = new FormGroup({
     nome: new FormControl('', {
-      validators: [ Validators.required, Validators.maxLength(255) ]
+      validators: [
+        Validators.required, Validators.maxLength(255)
+      ]
     }),
+
     email: new FormControl('', {
-      validators: [ Validators.required, Validators.email, Validators.maxLength(255) ]
-    })
-    
+      validators: [ 
+        Validators.required, Validators.email, Validators.maxLength(255)
+      ]
+    }),
+
+    telefones: new FormArray([
+      new FormControl('', {
+        validators: [
+          Validators.required, Validators.minLength(14), Validators.maxLength(15)
+        ]
+      })
+    ])
   });
+
+  get telefones() {
+    return this.userForm.controls.telefones as FormArray;
+  }
+
+  get hasInvalidTelephone() {
+    return this.telefones.controls.some(control => control.invalid);
+  }
+
+  addTelephone() {
+    if (this.telefones.length >= 10) return;
+    this.telefones.push(new FormControl('', {
+      validators: [
+        Validators.required, Validators.minLength(14), Validators.maxLength(15)
+      ]
+    }));
+  }
+
+  removeTelephone(index: number) {
+    this.telefones.removeAt(index);
+  }
+
+  formatTelephone(event: any) {
+    let value = event.target.value.replace(/\D/g, '');
+
+    if (value.length <= 10) {
+      value = value
+        .replace(/(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{4})(\d)/, '$1-$2');
+    } else {
+      value = value
+        .replace(/(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{5})(\d)/, '$1-$2');
+    }
+
+    event.target.value = value;
+  }
 
   get nameIsInvalid() {
     return (
@@ -40,12 +95,10 @@ export class UserForm {
 
   onSubmit() {
     this.savedUserData = this.userForm.value;
-    console.log(this.savedUserData)
   }
 
   onReset() {
     this.savedUserData = null;
     this.userForm.reset();
   }
-  
 }

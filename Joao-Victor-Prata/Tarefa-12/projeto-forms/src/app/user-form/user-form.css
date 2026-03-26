@@ -15,6 +15,62 @@ form {
   border-bottom-left-radius: 12px;
 }
 
+.array-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+
+  width: 10%;
+  align-self: flex-start;
+  margin: 0 1.5rem 0 0;
+
+  height: 2.7rem;
+  border-radius: 0.5rem;
+  font-size: 1.1rem;
+  border: none;
+  outline: none;
+  color: #ffffff;
+
+  transition: background-color 0.1s, color 0.1s;
+}
+
+.array-button:disabled {
+  background-color: #F1F1F0;
+  border: 2px solid #DFDFDC;
+  color: #616977;
+}
+
+.add {
+  background-color: #47b565;
+}
+
+.add:not(:disabled):hover {
+  background-color: #67c07a;
+}
+
+.add:not(:disabled):active {
+  background-color: #74d38d;
+  color: #000;
+}
+
+.remove {
+  background-color: #D7544C;
+}
+
+.remove:not(:disabled):hover {
+  background-color: #e45652;
+}
+
+.remove:not(:disabled):active {
+  background-color: #f8827e;
+  color: #000;
+}
+
+.telephone-row {
+  display: flex;
+}
+
 .result {
   gap: 1rem;
   max-width: 60rem;
