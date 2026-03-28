@@ -1,7 +1,8 @@
-import { Entity, Column, PrimaryGeneratedColumn, Timestamp } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+// import { Estudo } from './estudo.entity';
 
-@Entity('datas')
-export class Estudo {
+@Entity('datas_estudo')
+export class DataEstudo {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -9,5 +10,5 @@ export class Estudo {
   estudo_id: number;
 
   @Column({ nullable: false })
-  data_estudo: Timestamp;
+  data_estudo: Date;
 }

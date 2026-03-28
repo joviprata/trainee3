@@ -1,4 +1,5 @@
 import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+// import { DataEstudo } from './data-estudo.entity';
 
 @Entity('estudos')
 export class Estudo {

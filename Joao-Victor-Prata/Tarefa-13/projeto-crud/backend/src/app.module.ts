@@ -3,7 +3,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { EstudosModule } from './estudos/estudos.module';
-import { Estudo } from './estudos/entities/estudo.entity';
+import { ProvasModule } from './provas/provas.module';
 
 @Module({
   imports: [
@@ -13,11 +13,12 @@ import { Estudo } from './estudos/entities/estudo.entity';
       port: 5432,
       username: 'postgres',
       password: 'pg123',
-      database: '',
-      entities: [Estudo],
-      synchronize: true,
+      database: 'projeto_estudar',
+      autoLoadEntities: true,
+      synchronize: false,
     }),
     EstudosModule,
+    ProvasModule,
   ],
   controllers: [AppController],
   providers: [AppService],
