@@ -1,32 +1,52 @@
-<!-- @if (loading) {
-<div class="d-flex justify-content-center align-items-center vh-100">
-  <div class="spinner-border text-primary" role="status">
-  </div>
-</div>
-} -->
+@if (estudos$ | async; as estudos) {
+  @if (estudos.length > 0) {
+    <div class="container">
+      <div class="row row-cols-4 mt-5">
+        @for (estudo of estudos; track estudo.id) {
+          <div class="col mb-3">
+            <div class="container text-center">
+              <div class="card text-bg-{{ getBorderColor(estudo.materia) }}" style="width: 18rem; height: 21rem;">
+                <div class="card-body">
+                  <h5 class="card-title">{{ estudo.conteudo }}</h5>
+                  <p class="card-text">{{ estudo.anotacoes }}</p>
 
+                  <div class=" d-flex gap-3 justify-content-center">
+                    <button routerLink="{{ estudo.id }}/edit" class="btn btn-light">
+                      <i class="bi bi-pencil-square"></i>
+                    </button>
 
+                    <button type="button" class="btn btn-secondary" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + estudo.id">
+                      <i class="bi bi-trash"></i>
+                    </button>
+                  </div>
 
-@if (estudos$) {
-  <div class="container">
-    <div class="row row-cols-4">
-      @for (estudo of estudos$ | async; track estudo.id) {
-        <div class="col">
-          <div class="container text-center">
-            <div class="card border-{{ getBorderColor(estudo.materia) }}" style="width: 18rem;">
-              <div class="card-body">
-              <h5 class="card-title">{{ estudo.conteudo }}</h5>
-                <p class="card-text">{{ estudo.anotacoes }}</p>
-                <a routerLink="{{ estudo.id }}/edit" class="btn btn-primary">Editar</a>
+                  <div class="modal fade" [id]="'modal' + estudo.id" tabindex="-1">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <h1 class="modal-title fs-5" id="exampleModalLabel">{{ estudo.conteudo }}</h1>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                          Tem certeza de que deseja excluir este estudo?
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                          <button type="button" class="btn btn-danger" (click)="deleteEstudo(estudo)">Excluir</button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      }
+        }
+      </div>
     </div>
-  </div>
-}
-@else {
+  }
+  @else {
   <div class="d-flex justify-content-center align-items-center vh-100">
     <div class="bg-white rounded-4 shadow p-4 w-50 text-center" style="height: 50vh;">
       Nenhum estudo registrado.
@@ -37,38 +57,4 @@
     </div>
   </div>
 }
-
-
-<!-- 
-
-@if (estudos$ | async; as estudos) {
-  <div class="container">
-    <div class="row row-cols-4">
-      @for (estudo of estudos; track estudo.id) {
-        <div class="col">
-          <div class="container text-center">
-            <div class="card border-{{ getBorderColor(estudo.materia) }}" style="width: 18rem;">
-              <div class="card-body">
-              <h5 class="card-title">{{ estudo.conteudo }}</h5>
-                <p class="card-text">{{ estudo.anotacoes }}</p>
-                <a routerLink="{{ estudo.id }}/edit" class="btn btn-primary">Editar</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      }
-    </div>
-  </div>
 }
-
-@else {
-<div class="d-flex justify-content-center align-items-center vh-100">
-  <div class="bg-white rounded-4 shadow p-4 w-50 text-center" style="height: 50vh;">
-    Nenhum estudo registrado.
-
-    <button type="button" class="btn btn-primary" routerLink="/new">
-      <i class="bi bi-plus-lg"></i> Adicionar novo estudo
-    </button>
-  </div>
-</div>
-} -->

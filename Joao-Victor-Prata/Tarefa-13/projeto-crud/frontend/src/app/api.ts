@@ -6,6 +6,8 @@ export interface Estudo {
   conteudo: string;
   anotacoes: string;
   materia: string;
+  professor?: string;
+  dificuldade: number;
 }
 
 @Injectable({

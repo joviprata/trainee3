@@ -1,9 +1,8 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Api, Estudo } from '../api';
 import { AsyncPipe } from '@angular/common';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { RouterLink } from '@angular/router';
-import { Observable } from 'rxjs';
+import { RouterLink, Router } from '@angular/router';
+import { first, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-study-list',
@@ -13,27 +12,9 @@ import { Observable } from 'rxjs';
 })
 export class StudyList {
 
-  // estudos: any = null;
-
-  // private destroyRef = inject(DestroyRef);
-
-  // estudos: Estudo[] = [];
-
-  // constructor(private api: Api) {
-
-  // }
-
-  // ngOnInit() {
-  //   console.log('rodou ngOnInit');
-  //   this.api.getEstudos().subscribe({
-  //     next: (dados: any) => this.estudos = dados,
-  //     error: (err) => this.estudos =  err,
-  //   })
-  // }
-
   estudos$: Observable<Estudo[]>;
 
-  constructor(private api: Api) {
+  constructor(private api: Api, private router: Router) {
     this.estudos$= this.api.getEstudos();
   }
 
@@ -44,30 +25,19 @@ export class StudyList {
     else if (materia === 'Ciências') {
       return "success"
     }
-    else if (materia === 'Português') {
+    else if (materia === 'Português' || materia === 'Inglês' || materia === 'Arte' || materia === 'Educação Física') {
       return "danger"
     }
-    else if (materia === 'História') {
+    else if (materia === 'História' || materia === 'Geografia' || materia === 'Ensino Religioso') {
       return "warning"
     }
     
     return "secondary"
   }
 
-  // estudos: any = null;
-
-  // private destroyRef = inject(DestroyRef);
-
-  // constructor(private api: Api) {
-  //   this.api
-  //   .getEstudos()
-  //   .pipe(takeUntilDestroyed(this.destroyRef))
-  //   .subscribe({
-  //     next: (dado) => (this.estudos = dado),
-  //     error: (err) => (this.estudos = null),
-  //   });
-  // }
-
-  
-
+  deleteEstudo(estudo: Estudo) {
+    return this.api.deleteEstudo(estudo.id).pipe(first()).subscribe(() => {
+      window.location.reload();
+    });
+  }
 }
