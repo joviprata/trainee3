@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
 import { Api } from '../api';
@@ -11,7 +11,7 @@ import { first } from 'rxjs';
   styleUrl: './study-create.scss',
 })
 export class StudyCreate {
-  studyForm = new FormGroup({
+  @Input() studyForm = new FormGroup({
     conteudo: new FormControl('', {
       validators: [
         Validators.required, Validators.maxLength(255)
