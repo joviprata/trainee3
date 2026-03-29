@@ -5,8 +5,8 @@
         @for (estudo of estudos; track estudo.id) {
           <div class="col mb-3">
             <div class="container text-center">
-              <div class="card text-bg-{{ getBgColor(estudo.materia) }}" style="width: 18rem; height: 21rem;">
-                <div class="card-header">{{ estudo.materia }}</div>
+              <div class="card border-{{ getColor(estudo.materia) }} shadow" style="width: 18rem; height: 21rem;">
+                <div class="card-header text-bg-{{ getColor(estudo.materia) }}">{{ estudo.materia }}</div>
                 <div class="card-body">
                   <h5 class="card-title">{{ estudo.conteudo }}</h5>
                   @if (estudo.professor) {
@@ -14,6 +14,14 @@
                   }
                   <p class="card-text">{{ estudo.anotacoes }}</p>
 
+                  <!-- @if (estudo.datas_estudo) {
+                  <p class="card-text" >Datas de estudo:</p>
+                  <p class="card-text">{{ estudo.datas_estudo }}</p>
+                   @for (data_estudo of estudo.datas_estudo; track data_estudo.id) {
+                    <p class="card-text"> {{ data_estudo.data_estudo }}</p>
+
+                  }
+                } -->
                   <div class=" d-flex gap-3 justify-content-center">
                     <button routerLink="{{ estudo.id }}/edit" class="btn btn-light">
                       <i class="bi bi-pencil-square"></i>

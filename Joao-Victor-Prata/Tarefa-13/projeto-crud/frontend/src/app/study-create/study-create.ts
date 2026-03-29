@@ -42,12 +42,11 @@ export class StudyCreate {
       ]
     }),
 
-    // data_estudo: new FormControl([], {
+    // datas_estudo: new FormControl([], {
     //   validators: [
-    //     Validators.required,
+        
     //   ]
-    // }),
-    //...
+    // })
   })
 
   @Output() studyFormSubmit = new EventEmitter<void>();

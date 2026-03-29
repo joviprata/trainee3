@@ -8,6 +8,7 @@ export interface Estudo {
   materia: string;
   professor?: string;
   dificuldade: number;
+  // datas_estudo: Array<Date>;
 }
 
 @Injectable({

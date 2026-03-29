@@ -4,12 +4,14 @@ import { CreateEstudoDto } from './dto/create-estudo.dto';
 import { UpdateEstudoDto } from './dto/update-estudo.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+// import { DataEstudo } from './entities/data-estudo.entity';
 
 @Injectable()
 export class EstudosService {
   constructor(
     @InjectRepository(Estudo)
     private readonly estudoRepository: Repository<Estudo>,
+    // private readonly datasEstudoRepository: Repository<DataEstudo>,
   ) {}
 
   create(createEstudoDto: CreateEstudoDto) {

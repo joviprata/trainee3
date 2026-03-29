@@ -15,10 +15,10 @@ export class StudyList {
   estudos$: Observable<Estudo[]>;
 
   constructor(private api: Api, private router: Router) {
-    this.estudos$= this.api.getEstudos();
+    this.estudos$ = this.api.getEstudos();
   }
 
-  getBgColor(materia: string): string {
+  getColor(materia: string): string {
     if (materia === 'Matemática') {
       return "primary"
     }
