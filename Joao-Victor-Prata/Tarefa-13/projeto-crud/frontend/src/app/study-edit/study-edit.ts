@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Api } from '../api';
-import { Router, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { first } from 'rxjs';
 import { StudyCreate } from '../study-create/study-create';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -22,8 +22,6 @@ export class StudyEdit extends StudyCreate {
     super(api, router);
 
     this.estudoId = this.activatedRoute.snapshot.paramMap.get('id')!;
-
-    console.log(this.estudoId);
 
     this.api.getEstudo(parseInt(this.estudoId)).subscribe(estudo => {
       this.studyForm.patchValue(estudo);

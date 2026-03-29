@@ -26,6 +26,37 @@
       </select>
     </div>
 
-    <button type="submit" class="btn btn-primary" [disabled]="studyForm.invalid">Salvar</button>
+    <div class="mb-3">
+      <label class="form-label">Professor(a)</label>
+      <input type="text" class="form-control" id="professor" formControlName="professor" maxlength="1000">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Dificuldade</label>
+      <select id="dificuldade" class="form-select" formControlName="dificuldade">
+        <option [ngValue]="-1">Escolher...</option>
+        <option [ngValue]="1">Muito fácil</option>
+        <option [ngValue]="2">Fácil</option>
+        <option [ngValue]="3">Médio</option>
+        <option [ngValue]="4">Difícil</option>
+        <option [ngValue]="5">Muito difícil</option>
+      </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="studyForm.invalid" id="toastTrigger">Salvar</button>
+    
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+      <div id="toastAlert" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-header">
+          <img src="..." class="rounded me-2" alt="...">
+          <strong class="me-auto">Bootstrap</strong>
+          <small>11 mins ago</small>
+          <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body">
+          Hello, world! This is a toast message.
+        </div>
+      </div>
+    </div>
   </form>
 </div>

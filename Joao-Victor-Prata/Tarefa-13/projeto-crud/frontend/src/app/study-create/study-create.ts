@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from "@angular/router";
 import { Api } from '../api';
@@ -36,17 +36,31 @@ export class StudyCreate {
       ]
     }),
 
-    dificuldade: new FormControl(1, {
+    dificuldade: new FormControl(-1, {
       validators: [
-        Validators.required
+        Validators.required,
       ]
     }),
+
+    // data_estudo: new FormControl([], {
+    //   validators: [
+    //     Validators.required,
+    //   ]
+    // }),
     //...
   })
+
+  @Output() studyFormSubmit = new EventEmitter<void>();
 
   constructor(protected api: Api, protected router: Router) {}
 
   onSubmit() {
+
+    if (this.studyFormSubmit.observed) {
+      this.studyFormSubmit.emit();
+      return;
+    }
+
     this.router.navigate([''])
     return this.api.postEstudo(this.studyForm.value).pipe(first()).subscribe();
   }

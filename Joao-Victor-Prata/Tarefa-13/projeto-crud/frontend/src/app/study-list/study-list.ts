@@ -18,7 +18,7 @@ export class StudyList {
     this.estudos$= this.api.getEstudos();
   }
 
-  getBorderColor(materia: string): string {
+  getBgColor(materia: string): string {
     if (materia === 'Matemática') {
       return "primary"
     }
@@ -31,8 +31,23 @@ export class StudyList {
     else if (materia === 'História' || materia === 'Geografia' || materia === 'Ensino Religioso') {
       return "warning"
     }
-    
     return "secondary"
+  }
+
+  getDificulty(dificuldade: number): [string, string] {
+    if (dificuldade === 5) {
+      return ["tear-fill", "Muito difícil"]
+    }
+    else if (dificuldade === 4) {
+      return ["frown-fill", "Difícil"]
+    }
+    else if (dificuldade === 3) {
+      return ["neutral-fill", "Médio"]
+    }
+    else if (dificuldade === 2) {
+      return ["smile-fill", "Fácil"]
+    }
+    return ["laughing-fill", "Muito fácil"]
   }
 
   deleteEstudo(estudo: Estudo) {
