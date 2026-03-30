@@ -34,20 +34,20 @@ export class StudyList {
     return "secondary"
   }
 
-  getDificulty(dificuldade: number): [string, string] {
-    if (dificuldade === 5) {
-      return ["tear-fill", "Muito difícil"]
-    }
-    else if (dificuldade === 4) {
-      return ["frown-fill", "Difícil"]
-    }
-    else if (dificuldade === 3) {
-      return ["neutral-fill", "Médio"]
+  getDificulty(dificuldade: number): [string, string, string, string, string] {
+    if (dificuldade === 1) {
+      return ["-fill", "", "", "", ""]
     }
     else if (dificuldade === 2) {
-      return ["smile-fill", "Fácil"]
+      return ["-fill", "-fill", "", "", ""]
     }
-    return ["laughing-fill", "Muito fácil"]
+    else if (dificuldade === 3) {
+      return ["-fill", "-fill", "-fill", "", ""]
+    }
+    else if (dificuldade === 4) {
+      return ["-fill", "-fill", "-fill", "-fill", ""]
+    }
+    return ["-fill", "-fill", "-fill", "-fill", "-fill"]
   }
 
   deleteEstudo(estudo: Estudo) {
