@@ -1,0 +1,13 @@
+{
+  "name": "projeto-crud",
+  "version": "0.0.0",
+  "scripts": {
+    "start": "concurrently \"npm run backend\" \"npm run frontend\"",
+    "backend": "cd backend && npm run start",
+    "frontend": "cd frontend && npm start"
+  },
+  "private": true,
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}
