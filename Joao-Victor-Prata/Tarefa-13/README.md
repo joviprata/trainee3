@@ -45,8 +45,8 @@ npm start
   <img width="1920" height="1080" alt="Resultado Form" src="https://github.com/user-attachments/assets/40abc810-8bdb-41a4-9111-b597e7a5952c" />
 </p>
 <p align="center">
-  <img width="1920" height="1080" alt="Form" src="https://github.com/user-attachments/assets/48b239a3-7a78-4632-b128-84d2a7976af3" />
+  <img width="1920" height="1080" alt="Form" src="https://github.com/user-attachments/assets/d46e72f6-0e73-4779-b685-84e889f7700f" />
 </p>
 <p align="center">
-  <img width="1920" height="1080" alt="Form" src="https://github.com/user-attachments/assets/d46e72f6-0e73-4779-b685-84e889f7700f" />
+  <img width="1920" height="1080" alt="Form" src="https://github.com/user-attachments/assets/48b239a3-7a78-4632-b128-84d2a7976af3" />
 </p>
