@@ -1,9 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Api, Estudo } from '../api';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { Observable, first, map } from 'rxjs';
-import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-study-list',
@@ -12,11 +11,20 @@ import * as bootstrap from 'bootstrap';
   styleUrl: './study-list.scss',
 })
 
-export class StudyList {
+export class StudyList implements OnInit {
 
   estudos$: Observable<Estudo[]>;
 
   constructor(private api: Api, private router: Router) {
+    this.estudos$ = this.api.getEstudos();
+  }
+
+
+  ngOnInit() {
+    this.loadEstudos();
+  }
+  
+  loadEstudos() {
     this.estudos$ = this.api.getEstudos();
   }
 
