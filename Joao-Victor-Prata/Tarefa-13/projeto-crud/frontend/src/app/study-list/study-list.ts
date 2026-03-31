@@ -3,6 +3,7 @@ import { Api, Estudo } from '../api';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
 import { Observable, first, map } from 'rxjs';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-study-list',
@@ -10,6 +11,7 @@ import { Observable, first, map } from 'rxjs';
   templateUrl: './study-list.html',
   styleUrl: './study-list.scss',
 })
+
 export class StudyList {
 
   estudos$: Observable<Estudo[]>;
@@ -26,18 +28,6 @@ export class StudyList {
         )
       ),
     );
-    return this.estudos$.pipe(first()).subscribe();
-  }
-
-  reverseSortEstudos(campo: keyof Estudo) {
-    this.estudos$ = this.estudos$.pipe(
-      map(estudos =>
-        estudos.sort((b, a) =>
-          String(a[campo]).toLowerCase().localeCompare(String(b[campo]).toLowerCase())
-        )
-      ),
-    );
-
     return this.estudos$.pipe(first()).subscribe();
   }
 

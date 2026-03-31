@@ -2,13 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 export interface Estudo {
-  id: number;
+  id: string;
   conteudo: string;
   anotacoes: string;
   materia: string;
   professor?: string;
   dificuldade: number;
-  // datas_estudo: Array<Date>;
 }
 
 @Injectable({
@@ -29,15 +28,15 @@ export class Api {
     return this.http.get<Estudo[]>(`${ this.baseUrl }/estudos`);
   }
 
-  getEstudo(id: number) {
+  getEstudo(id: string) {
     return this.http.get<Estudo>(`${ this.baseUrl }/estudos/${ id }`);
   }
 
-  patchEstudo(id: number, dados: any) {
+  patchEstudo(id: string, dados: any) {
     return this.http.patch<Estudo>(`${ this.baseUrl }/estudos/${ id }`, dados);
   }
 
-  deleteEstudo(id: number) {
+  deleteEstudo(id: string) {
     return this.http.delete<void>(`${ this.baseUrl }/estudos/${ id }`);
   }
 }

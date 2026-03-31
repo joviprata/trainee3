@@ -27,16 +27,16 @@ export class EstudosController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.estudosService.findOne(+id);
+    return this.estudosService.findOne(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEstudoDto: UpdateEstudoDto) {
-    return this.estudosService.update(+id, updateEstudoDto);
+    return this.estudosService.update(id, updateEstudoDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.estudosService.remove(+id);
+    return this.estudosService.remove(id);
   }
 }

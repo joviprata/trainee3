@@ -3,6 +3,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Router } from "@angular/router";
 import { Api } from '../api';
 import { first } from 'rxjs';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-study-create',
@@ -41,12 +42,6 @@ export class StudyCreate {
         Validators.required,
       ]
     }),
-
-    // datas_estudo: new FormControl([], {
-    //   validators: [
-        
-    //   ]
-    // })
   })
 
   @Output() studyFormSubmit = new EventEmitter<void>();
@@ -59,8 +54,13 @@ export class StudyCreate {
       this.studyFormSubmit.emit();
       return;
     }
-    
+
+    const myToast = new bootstrap.Toast('.toast');
+    myToast.show();
+
     this.router.navigate([''])
     return this.api.postEstudo(this.studyForm.value).pipe(first()).subscribe();
+
+    
   }
 }

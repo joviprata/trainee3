@@ -4,14 +4,12 @@ import { CreateEstudoDto } from './dto/create-estudo.dto';
 import { UpdateEstudoDto } from './dto/update-estudo.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-// import { DataEstudo } from './entities/data-estudo.entity';
 
 @Injectable()
 export class EstudosService {
   constructor(
     @InjectRepository(Estudo)
     private readonly estudoRepository: Repository<Estudo>,
-    // private readonly datasEstudoRepository: Repository<DataEstudo>,
   ) {}
 
   create(createEstudoDto: CreateEstudoDto) {
@@ -24,7 +22,7 @@ export class EstudosService {
     return estudo;
   }
 
-  async findOne(id: number) {
+  async findOne(id: string) {
     const estudo = await this.estudoRepository.findOneBy({ id });
 
     if (!estudo) {
@@ -33,7 +31,7 @@ export class EstudosService {
     return estudo;
   }
 
-  async update(id: number, updateEstudoDto: UpdateEstudoDto): Promise<Estudo> {
+  async update(id: string, updateEstudoDto: UpdateEstudoDto): Promise<Estudo> {
     const estudo = await this.estudoRepository.findOne({
       where: { id },
     });
@@ -46,7 +44,7 @@ export class EstudosService {
     return this.estudoRepository.save(estudo);
   }
 
-  async remove(id: number): Promise<void> {
+  async remove(id: string): Promise<void> {
     const resultado = await this.estudoRepository.delete(id);
 
     if (resultado.affected === 0) {

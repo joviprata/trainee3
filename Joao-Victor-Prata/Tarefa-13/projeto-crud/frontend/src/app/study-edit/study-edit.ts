@@ -23,13 +23,13 @@ export class StudyEdit extends StudyCreate {
 
     this.estudoId = this.activatedRoute.snapshot.paramMap.get('id')!;
 
-    this.api.getEstudo(parseInt(this.estudoId)).subscribe(estudo => {
+    this.api.getEstudo(this.estudoId).subscribe(estudo => {
       this.studyForm.patchValue(estudo);
     });
   }
 
   override onSubmit() {
     this.router.navigate([''])
-    return this.api.patchEstudo(parseInt(this.estudoId), this.studyForm.value).pipe(first()).subscribe();
+    return this.api.patchEstudo(this.estudoId, this.studyForm.value).pipe(first()).subscribe();
   }
 }

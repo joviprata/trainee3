@@ -34,8 +34,4 @@ export class CreateEstudoDto {
   @IsNumber()
   @IsOptional()
   readonly prova_id?: number;
-
-  // datas: {
-  //   data_estudo: Date;
-  // }[];
 }
