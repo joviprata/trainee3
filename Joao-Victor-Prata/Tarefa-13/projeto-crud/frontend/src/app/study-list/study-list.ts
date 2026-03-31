@@ -21,7 +21,9 @@ export class StudyList implements OnInit {
 
 
   ngOnInit() {
-    this.loadEstudos();
+    this.router.events.subscribe(() => {
+      this.loadEstudos();
+    });
   }
   
   loadEstudos() {
@@ -31,7 +33,7 @@ export class StudyList implements OnInit {
   sortEstudos(campo: keyof Estudo) {
     this.estudos$ = this.estudos$.pipe(
       map(estudos =>
-        estudos.sort((a, b) =>
+        [...estudos].sort((a, b) =>
           String(a[campo]).toLowerCase().localeCompare(String(b[campo]).toLowerCase())
         )
       ),
@@ -76,6 +78,4 @@ export class StudyList implements OnInit {
       window.location.reload();
     });
   }
-
-
 }
