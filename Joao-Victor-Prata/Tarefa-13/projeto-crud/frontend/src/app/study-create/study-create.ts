@@ -39,6 +39,8 @@ export class StudyCreate {
     dificuldade: new FormControl(-1, {
       validators: [
         Validators.required,
+        Validators.min(1),
+        Validators.max(5),
       ]
     }),
   })
@@ -48,13 +50,13 @@ export class StudyCreate {
   constructor(protected api: Api, protected router: Router) {}
 
   onSubmit() {
-
     if (this.studyFormSubmit.observed) {
       this.studyFormSubmit.emit();
       return;
     }
 
-    this.router.navigate([''])
-    return this.api.postEstudo(this.studyForm.value).pipe(first()).subscribe();
+    this.api.postEstudo(this.studyForm.value).pipe(first()).subscribe(() => {
+      this.router.navigate(['']);
+    });
   }
 }
