@@ -38,6 +38,52 @@ Depois, ainda em cada pasta, inicie o projeto com:
 npm start
 ```
 
+## Configuração do banco
+Certifique-se de ter um PostgreSQL rodando. Configure as variáveis no backend usando .env (host, port, username, password, database).
+
+O banco de dados foi criado com o seguinte query:
+
+
+```sql
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
+
+CREATE TABLE provas (
+	id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+	nome VARCHAR(255) NOT NULL,
+	data_prova TIMESTAMP NOT NULL
+);
+
+CREATE TABLE estudos (
+	id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+	conteudo VARCHAR(255) NOT NULL,
+	anotacoes TEXT,
+	materia VARCHAR(100) NOT NULL,
+	professor VARCHAR(255),
+	dificuldade INTEGER NOT NULL,
+
+	prova_id UUID,
+	CONSTRAINT fk_prova
+		FOREIGN KEY (prova_id)
+		REFERENCES provas(id)
+		ON DELETE SET NULL
+);
+
+CREATE TABLE datas_estudo (
+	id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+	estudo_id UUID NOT NULL,
+	data_estudo DATE NOT NULL,
+
+	CONSTRAINT fk_estudo
+		FOREIGN KEY (estudo_id)
+		REFERENCES estudos(id)
+		ON DELETE CASCADE
+);
+```
+
+
+## Imagens do projeto
+
+
 <p align="center">
   <img width="1920" height="1080" alt="Form" src="https://github.com/user-attachments/assets/9ff14a33-a13d-4ad4-96ed-0972556e3940" />
 </p>
