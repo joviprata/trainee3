@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Api, Estudo } from '../api';
 import { AsyncPipe } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
-import { first, Observable } from 'rxjs';
+import { Observable, first, map } from 'rxjs';
 
 @Component({
   selector: 'app-study-list',
@@ -16,6 +16,29 @@ export class StudyList {
 
   constructor(private api: Api, private router: Router) {
     this.estudos$ = this.api.getEstudos();
+  }
+
+  sortEstudos(campo: keyof Estudo) {
+    this.estudos$ = this.estudos$.pipe(
+      map(estudos =>
+        estudos.sort((a, b) =>
+          String(a[campo]).toLowerCase().localeCompare(String(b[campo]).toLowerCase())
+        )
+      ),
+    );
+    return this.estudos$.pipe(first()).subscribe();
+  }
+
+  reverseSortEstudos(campo: keyof Estudo) {
+    this.estudos$ = this.estudos$.pipe(
+      map(estudos =>
+        estudos.sort((b, a) =>
+          String(a[campo]).toLowerCase().localeCompare(String(b[campo]).toLowerCase())
+        )
+      ),
+    );
+
+    return this.estudos$.pipe(first()).subscribe();
   }
 
   getColor(materia: string): string {
@@ -55,4 +78,6 @@ export class StudyList {
       window.location.reload();
     });
   }
+
+
 }

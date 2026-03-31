@@ -59,7 +59,7 @@ export class StudyCreate {
       this.studyFormSubmit.emit();
       return;
     }
-
+    
     this.router.navigate([''])
     return this.api.postEstudo(this.studyForm.value).pipe(first()).subscribe();
   }

@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary border-bottom">
   <div class="container-fluid">
     <a class="navbar-brand mb-0 w-25" routerLink="">
-      <img src="assets/logo.png" class="w-25" alt="Logo FGV" />
+      <img src="assets/logo.png" class="me-2" style="height: 25px; width: auto;" alt="Logo FGV" />
       Meus Estudos
     </a>
 
@@ -17,9 +17,25 @@
         <i class="bi bi-filter"></i>
         Filtrar
       </button>
-      <button type="button" class="btn btn-primary">
+
+      <div class="dropdown z-3">
+        
+        <button class="btn btn-primary " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <i class="bi bi-sort-down"></i>
+          Ordenar
+        </button>
+        <!-- <ul class="dropdown-menu z-3">
+          <li><a class="dropdown-item z-3" (click)="sort('conteudo')">Conteúdo</a></li>
+          <li><a class="dropdown-item z-3" (click)="sort('anotacoes')">Anotações</a></li>
+          <li><a class="dropdown-item z-3" (click)="sort('materia')">Matéria</a></li>
+          <li><a class="dropdown-item z-3" (click)="sort('professor')">Professor</a></li>
+          <li><a class="dropdown-item z-3" (click)="sort('dificuldade')">Dificuldade</a></li>
+        </ul> -->
+</div>
+
+      <!-- <button type="button" class="btn btn-primary">
         Selecionar
-      </button>
+      </button> -->
       
       <button type="button" class="btn btn-primary" routerLink="/new">
         <i class="bi bi-plus-lg"></i>
