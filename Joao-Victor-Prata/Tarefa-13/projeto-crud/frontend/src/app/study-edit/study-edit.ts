@@ -29,7 +29,10 @@ export class StudyEdit extends StudyCreate {
   }
 
   override onSubmit() {
-    this.router.navigate([''])
-    return this.api.patchEstudo(this.estudoId, this.studyForm.value).pipe(first()).subscribe();
+    this.api.patchEstudo(this.estudoId, this.studyForm.value)
+      .pipe(first())
+      .subscribe(() => {
+        this.router.navigate(['']);
+      });
   }
 }
