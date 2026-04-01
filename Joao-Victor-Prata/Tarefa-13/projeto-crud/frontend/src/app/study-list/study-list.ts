@@ -57,7 +57,7 @@ export class StudyList implements OnInit {
     return "secondary"
   }
 
-  getDificulty(dificuldade: number): [string, string, string, string, string] {
+  getDifficulty(dificuldade: number): [string, string, string, string, string] {
     if (dificuldade === 1) {
       return ["-fill", "", "", "", ""]
     }
