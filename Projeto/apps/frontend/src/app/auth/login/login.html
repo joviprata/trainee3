@@ -1,0 +1,73 @@
+<div class="login-container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="bg-slider">
+    <div *ngFor="let img of images; let i = index" 
+         class="bg-slide" 
+         [class.active]="i === currentImageIndex" 
+         [style.background-image]="'url(' + img + ')'">
+    </div>
+    <div class="bg-overlay"></div>
+  </div>
+  <div class="glass-card p-5" style="width: 100%; max-width: 450px; z-index: 2;">
+    <div class="text-center mb-4">
+      <h2 style="color: var(--primary); font-weight: 700;">Worldin</h2>
+      <p class="text-secondary">Faça login para acessar o sistema</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div class="mb-3">
+        <label for="email" class="form-label text-light">E-mail</label>
+        <input 
+          type="email" 
+          id="email" 
+          class="form-control form-control-custom" 
+          formControlName="email" 
+          placeholder="exemplo@email.com"
+          maxlength="50"
+        >
+        <div *ngIf="loginForm.get('email')?.touched" class="text-danger small mt-1">
+          <span *ngIf="loginForm.get('email')?.hasError('required')">E-mail é obrigatório.</span>
+          <span *ngIf="loginForm.get('email')?.hasError('email') && !loginForm.get('email')?.hasError('required')">Formato de e-mail inválido.</span>
+          <span *ngIf="loginForm.get('email')?.hasError('invalidDomain') && !loginForm.get('email')?.hasError('email') && !loginForm.get('email')?.hasError('required')">Domínio inválido (ex: nome@dominio.com).</span>
+          <span *ngIf="loginForm.get('email')?.hasError('maxlength')">Máximo de 50 caracteres.</span>
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="senha" class="form-label text-light">Senha</label>
+        <div class="input-group">
+          <input 
+            [type]="showPassword ? 'text' : 'password'" 
+            id="senha" 
+            class="form-control form-control-custom border-end-0" 
+            formControlName="senha" 
+            placeholder="Digite sua senha"
+            maxlength="50"
+          >
+          <span class="input-group-text form-control-custom border-start-0 text-secondary" style="cursor: pointer; border-radius: 0 8px 8px 0; background: rgba(255,255,255,0.05);" (click)="togglePassword()">
+            <i class="bi" [ngClass]="showPassword ? 'bi-eye-slash' : 'bi-eye'"></i>
+          </span>
+        </div>
+        <div *ngIf="loginForm.get('senha')?.invalid && loginForm.get('senha')?.touched" class="text-danger small mt-1">
+          Campo obrigatório (máx 50 caracteres).
+        </div>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger p-2 mb-3 small">
+        {{ errorMessage }}
+      </div>
+
+      <button 
+        type="submit" 
+        class="btn btn-primary-custom w-100 mb-3"
+        [disabled]="loginForm.invalid || isLoading">
+        <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status"></span>
+        {{ isLoading ? 'Entrando...' : 'Entrar' }}
+      </button>
+
+      <div class="text-center mt-3">
+        <span class="text-secondary">Ainda não tem uma conta? </span>
+        <a routerLink="/register" style="color: var(--primary); text-decoration: none; font-weight: 500;">Cadastrar-se</a>
+      </div>
+    </form>
+  </div>
+</div>
