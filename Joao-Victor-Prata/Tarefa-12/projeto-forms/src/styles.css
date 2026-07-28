@@ -1,0 +1,122 @@
+/* You can add global styles to this file, and also import other style files */
+
+* {
+  font-family: "Lato", system-ui;
+}
+
+body {
+  background-color: #b2cedb;
+  margin: 0;
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #0E0D0B;
+  margin: 0 0 0 1.5rem;
+  padding-top: 1rem;
+  gap: 0.5rem;
+}
+
+p {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #47474A;
+  margin: 0 0 0 1.5rem;
+  gap: 0.5rem;
+}
+
+.page {
+  background-color: #F1F1F0;
+  max-width: 60rem;
+  margin: 0 auto;
+  min-height: 70rem;
+}
+
+.label {
+  color: #0E0D0B;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0.5rem 0 0.3rem 1.5rem;
+}
+
+.required::after {
+  content: " *";
+  color: #D7262F;
+}
+
+.text-input {
+  display: block;
+  border-radius: 0.5rem;
+  background: #ffffff;
+  border: 2px solid #e7ecf0;
+  color: #0E0D0B;
+  width: auto;
+  height: 2.5rem;
+  outline: none;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0 1.5rem 0.3rem 1.5rem;
+
+  &:focus-within {
+    border-color: #068fff;
+    border-width: 1.5px;
+    box-shadow: 0 0 0 4px #dfeefa;
+  }
+  
+  &::placeholder {
+    color: #8697ac;
+  }
+  
+  padding-left: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.placeholder {
+  color: #8697ac;
+}
+
+.control-error {
+  color: #D7262F;
+  margin: 0 0 1rem 1.5rem;
+}
+
+.button {
+    display: block; 
+    width: 30%;
+    height: 2.7rem;
+    border-radius: 0.5rem;
+    font-size: 1.1rem;
+    border: none;
+    outline: none;
+    background-color: #1C3C75;
+    color: #ffffff;
+    transition: background-color 0.1s, color 0.1s;
+    margin: 3rem auto 1rem auto;
+  }
+
+.button:hover {
+    background-color: #1664AB;
+  }
+
+.button:active {
+  background-color: #72BDE8;
+  color: #000;
+}
+
+.button:disabled {
+  background-color: #F1F1F0;
+  border: 2px solid #DFDFDC;
+  color: #616977;
+}
+
+select.text-input {
+  width: auto;
+  height: 2.8rem;
+}
+
+textarea.text-input {
+  height: 6rem;
+  padding: 0.75rem 1rem;
+  resize: none;
+}

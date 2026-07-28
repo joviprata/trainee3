@@ -1,0 +1,174 @@
+@if (!savedUserData) {
+  <div class="form-text">
+    <h1>Complete seus dados</h1>
+    <p>Preencha seus dados pessoais para realizar seu cadastro.</p>
+  </div>
+
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+    <label class="label required">Nome completo</label>
+    <input
+      class="text-input"
+      id="nome"
+      type="text"
+      placeholder="Seu nome completo"
+      formControlName="nome"
+      maxlength="255"
+    />
+
+    @if (nameIsInvalid) {
+      <p class="control-error">
+        Por favor, insira seu nome completo.
+      </p>
+    }
+
+
+    <label class="label required">E-mail</label>
+    <input
+      class="text-input"
+      id="email"
+      type="email"
+      placeholder="seuemail@exemplo.com"
+      formControlName="email"
+      maxlength="255"
+    />
+
+    @if (emailIsInvalid) {
+      <p class="control-error">
+        E-mail inválido. Por favor, tente novamente. 
+      </p>
+    }
+
+
+    <label class="label required">Telefone(s)</label>
+
+    <div formArrayName="telefones">
+      @for (telefone of telefones.controls; let i = $index; track i) {
+        <div class="array-row">
+          <input
+            class="text-input"
+            type="text"
+            [formControlName]="i"
+            placeholder="(00) 00000-0000"
+            maxlength="15"
+            (input)="formatTelephone($event);"
+          />
+
+          <button
+            type="button"
+            class="array-button remove"
+            (click)="removeTelephone(i)">
+            Remover
+          </button>
+
+          @if (i === telefones.length - 1) {
+            <button
+              type="button"
+              class="array-button add"
+              (click)="addTelephone()"
+              [disabled]="telefones.length >= 10 || hasInvalidTelephone"
+            >
+              Adicionar
+            </button>
+          }
+        </div>
+
+        @if (telefone.invalid && telefone.touched) {
+          <p class="control-error">
+            Telefone inválido. Por favor, tente novamente.
+          </p>
+        }
+      }
+    </div>
+    
+    @if (telefones.length === 0) {
+      <button
+        type="button"
+        class="array-button add"
+        style="margin-left: 1.5rem;"
+        (click)="addTelephone()">
+        Adicionar
+      </button>
+    }
+    @if (telefones.length >= 10) {
+      <p class="control-error">
+        Máximo de 10 telefones atingido.
+      </p>
+    }
+
+    <label class="label">Redes sociais</label>
+
+    <div formGroupName="redesSociais">
+      @for (item of userForm.controls.redesSociais.controls | keyvalue; track item.key; let last = $last) {
+        <div class="array-row">
+          <label class="label">{{ item.key }}</label>
+
+          <input
+            class="text-input"
+            type="text"
+            [formControlName]="item.key"
+            placeholder="Seu usuário"
+          />
+
+          <button
+            type="button"
+            class="array-button remove"
+            (click)="userForm.controls.redesSociais.removeControl(item.key)"
+          >
+            Remover
+          </button>
+
+          @if (last) {
+            <button
+              type="button"
+              class="array-button add"
+              (click)="addRedeSocialPrompt()"
+              [disabled]="redesSociaisLength >= 10"
+            >
+              Adicionar
+            </button>
+          }
+        </div>
+
+        @if (item.value.invalid && item.value.touched) {
+          <p class="control-error">
+            Campo obrigatório.
+          </p>
+        }
+      }
+    </div>
+
+    @if ((userForm.controls.redesSociais.controls | keyvalue).length === 0) {
+      <button
+        type="button"
+        class="array-button add"
+        style="margin-left: 1.5rem;"
+        (click)="addRedeSocialPrompt()"
+        [disabled]="redesSociaisLength >= 10"
+      >
+        Adicionar
+      </button>
+    }
+    
+    @if (redesSociaisLength >= 10) {
+      <p class="control-error">
+        Máximo de 10 redes sociais atingido.
+      </p>
+    }
+
+    <button type="submit" class="button" [disabled]="userForm.invalid">
+      Enviar
+    </button>
+
+  </form>
+
+} @else {
+  <div class="result">
+    <h1>Dados enviados com sucesso!</h1>
+      <p>{{ savedUserData | json }}</p>
+  </div>
+
+  <button class="button" (click)="onReset()">
+    Fazer outro envio
+  </button>
+}
