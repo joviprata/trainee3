@@ -1,14 +1,23 @@
 import express from 'express';
+import type { NextFunction, Request, Response } from 'express';
 import 'dotenv/config';
-import crypto from 'crypto';
-import cookieParser from 'cookie-parser';
 
 const app = express();
 const port = 3000;
 
-const usuarios = [
-    { id: 1, nome: 'Jovi', senha: process.env.SENHA_USUARIO_ADMIN_1 }
-];
+interface Usuario {
+    token: string;
+    id: number;
+    nome: string;
+};
+
+const usuarios: Record<string, Usuario> = {
+  [process.env.TOKEN_USUARIO_ADMIN_1 as string]: {
+    token: process.env.TOKEN_USUARIO_ADMIN_1 as string,
+    id: 1,
+    nome: 'Jovi',
+  },
+};
 
 let clientes = [
     { id: 1, nome: 'Péricles', email: 'pericles@gmail.com'},
@@ -21,81 +30,31 @@ let clientes = [
     { id: 8, nome: 'Adelaide', email: 'adelaide@gmail.com'},
 ];
 
-const sessoes = {}; // Sessões de usuários autenticados
-
-
-app.use(express.json()); // Middleware que traduz o body do request para JSON
-app.use(cookieParser());
-
 
 // Autenticação:
-function gerarToken() {
-    return crypto.randomBytes(24).toString('hex');
-};
+function authUsuario(req: Request, res: Response, next: NextFunction) {
+    const authHeader = req.headers.authorization;
 
-function authUsuario(req, res, next) {
-    const token = req.cookies.idSessao;
-
-    if (!token || !sessoes[token]) {
-        return res.status(401).send({error: "Usuário não autenticado"});
+    if (!authHeader) {
+        return res.status(401).send({error: "Usuário não autenticado: faltando credenciais"});
     };
 
-    req.user = sessoes[token]; // pega dados de usuário (id e nome) se necessário obter depois nos endpoints
+    const token = authHeader.replace('ApiKey ', '');
+
+    const user = usuarios[token];
+
+    if (!user) {
+        return res.status(401).send({error: "Usuário não encontrado"});
+    };
+
     next();
 };
 
-app.post('/login', (req, res) => {
-    // Autenticação de usuário informando nome e senha:
-    const { nome, senha } = req.body;
 
-    if (!nome || !senha) {
-        return res.status(400).send({error: "Nome e senha são obrigatórios"});
-    };
-
-    const usuario = usuarios.find(usuario => usuario.nome === nome);
-
-    if (!usuario) {
-        return res.status(404).send({error: "Usuário não encontrado"});
-    };
-
-    if (usuario.senha !== senha) {
-        return res.status(401).send({error: "Credenciais inválidas"});
-    };
-
-    const token = gerarToken();
-
-    sessoes[token] = {
-        idUsuario: usuario.id,
-        nome: usuario.nome
-    };
-
-    res.cookie('idSessao', token, {
-        httpOnly: true // Id da sessão é visto / acessado somente pelo web server
-    });
-
-    return res.status(200).send({message: "Usuário autenticado", usuario: nome});
-});
-
-app.post('/logout', (req, res) => {
-    // Autenticação de usuário informando nome e senha:
-    const token = req.cookies.idSessao;
-
-    if (!token || !sessoes[token]) {
-        return res.status(401).send({error: "Usuário não autenticado"});
-    };
-
-    req.user = sessoes[token]; // pega dados de usuário (id e nome) se necessário obter depois nos endpoints
-
-    res.clearCookie('idSessao');
-
-    delete sessoes[token];
-
-    return res.status(200).send({message: 'Usuário foi deslogado', usuario: req.user});
-
-});
+app.use(express.json()); // Middleware que traduz o body do request para JSON
 
 
-app.post('/clientes', authUsuario, (req, res) => { // CREATE
+app.post('/clientes', authUsuario, (req: Request, res: Response) => { // CREATE
     // Criar um cliente novo informando nome e email:
     const { nome, email } = req.body;
 
@@ -115,12 +74,12 @@ app.post('/clientes', authUsuario, (req, res) => { // CREATE
 });
 
 
-app.get('/clientes', authUsuario, (req, res) => { // READ
+app.get('/clientes', authUsuario, (req: Request, res: Response) => { // READ
     res.status(200).send(clientes); // Ler informações sobre todos os clientes
 });
 
 
-app.get('/clientes/:id', authUsuario, (req, res) => { // READ
+app.get('/clientes/:id', authUsuario, (req: Request, res: Response) => { // READ
     // Ler informações sobre cliente com id específico:
     const { id } = req.params; 
     const clienteSelecionado = clientes.find(cliente => cliente.id === Number(id));
@@ -133,7 +92,7 @@ app.get('/clientes/:id', authUsuario, (req, res) => { // READ
 });
 
 
-app.put('/clientes/:id', authUsuario, (req, res) => { // UPDATE
+app.put('/clientes/:id', authUsuario, (req: Request, res: Response) => { // UPDATE
     // Procurar cliente pelo id:
     const { id } = req.params; 
     const clienteSelecionado = clientes.find(cliente => cliente.id === Number(id));
@@ -156,7 +115,7 @@ app.put('/clientes/:id', authUsuario, (req, res) => { // UPDATE
 });
 
 
-app.patch('/clientes/:id', authUsuario, (req, res) => { // UPDATE
+app.patch('/clientes/:id', authUsuario, (req: Request, res: Response) => { // UPDATE
     // Procurar cliente pelo id:
     const { id } = req.params; 
     const clienteSelecionado = clientes.find(cliente => cliente.id === Number(id));
@@ -175,7 +134,7 @@ app.patch('/clientes/:id', authUsuario, (req, res) => { // UPDATE
 });
 
 
-app.delete('/clientes/:id', authUsuario, (req, res) => { // DELETE
+app.delete('/clientes/:id', authUsuario, (req: Request, res: Response) => { // DELETE
     // Procurar cliente pelo id:
     const { id } = req.params; 
     const clienteIndex = clientes.findIndex(cliente => cliente.id === Number(id));

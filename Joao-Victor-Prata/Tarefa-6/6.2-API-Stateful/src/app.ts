@@ -1,4 +1,6 @@
 import express from 'express';
+import type { Request, Response, NextFunction } from 'express';
+
 import 'dotenv/config';
 import crypto from 'crypto';
 import cookieParser from 'cookie-parser';
@@ -6,11 +8,24 @@ import cookieParser from 'cookie-parser';
 const app = express();
 const port = 3000;
 
-const usuarios = [
-    { id: 1, nome: 'Jovi', senha: process.env.SENHA_USUARIO_ADMIN_1 }
+interface Usuario {
+  id: number;
+  nome: string;
+  senha: string;
+}
+
+const usuarios: Usuario[] = [
+    { id: 1, nome: 'Jovi', senha: process.env.SENHA_USUARIO_ADMIN_1 as string }
 ];
 
-let clientes = [
+
+interface Cliente {
+  id: number;
+  nome: string;
+  email: string;
+}
+
+let clientes: Cliente[] = [
     { id: 1, nome: 'Péricles', email: 'pericles@gmail.com'},
     { id: 2, nome: 'Reinaldo', email: 'reinaldo@gmail.com'},
     { id: 3, nome: 'Gertrudes', email: 'gertrudes@gmail.com'},
@@ -21,7 +36,13 @@ let clientes = [
     { id: 8, nome: 'Adelaide', email: 'adelaide@gmail.com'},
 ];
 
-const sessoes = {}; // Sessões de usuários autenticados
+
+interface Sessao {
+  idUsuario: number;
+  nome: string;
+}
+
+const sessoes: Record<string, Sessao> = {}; // Sessões de usuários autenticados
 
 
 app.use(express.json()); // Middleware que traduz o body do request para JSON
@@ -33,14 +54,13 @@ function gerarToken() {
     return crypto.randomBytes(24).toString('hex');
 };
 
-function authUsuario(req, res, next) {
+function authUsuario(req: Request, res: Response, next: NextFunction) {
     const token = req.cookies.idSessao;
 
     if (!token || !sessoes[token]) {
         return res.status(401).send({error: "Usuário não autenticado"});
     };
 
-    req.user = sessoes[token]; // pega dados de usuário (id e nome) se necessário obter depois nos endpoints
     next();
 };
 
@@ -84,13 +104,11 @@ app.post('/logout', (req, res) => {
         return res.status(401).send({error: "Usuário não autenticado"});
     };
 
-    req.user = sessoes[token]; // pega dados de usuário (id e nome) se necessário obter depois nos endpoints
-
     res.clearCookie('idSessao');
 
     delete sessoes[token];
 
-    return res.status(200).send({message: 'Usuário foi deslogado', usuario: req.user});
+    return res.status(200).send({message: 'Usuário foi deslogado'});
 
 });
 
