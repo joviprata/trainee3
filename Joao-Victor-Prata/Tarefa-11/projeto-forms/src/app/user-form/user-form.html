@@ -1,0 +1,266 @@
+@if (!dadosSalvos) {
+  <div class="form-text">
+    <h1>Complete seus dados</h1>
+    <p>Preencha seus dados pessoais para realizar seu cadastro.</p>
+  </div>
+
+  <form #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+      <label class="label required">Nome completo</label>
+      <input
+        class="text-input"
+        id="name"
+        type="text"
+        placeholder="Seu nome completo"
+        name="nome"
+        ngModel
+        required
+        maxlength="255"
+        #nome="ngModel"
+      />
+
+      @if (nome.touched && nome.invalid) {
+        <p class="control-error">
+          Por favor, insira seu nome completo.
+        </p>
+      }
+
+      <label class="label required">CPF</label>
+      <input
+        class="text-input"
+        id="cpf"
+        type="text"
+        placeholder="000.000.000-00"
+        name="cpf"
+        ngModel
+        required
+        maxlength="14"
+        (input)="formatCPF($event)"
+        #cpf="ngModel"
+      />
+
+      @if (cpf.touched && cpf.invalid) {
+        <p class="control-error">
+          CPF inválido. Por favor, tente novamente.
+        </p>
+      }
+
+      <label class="label required">Data de nascimento</label>
+      <input
+        class="text-input"
+        id="dateOfBirth"
+        type="text"
+        placeholder="dd/mm/aaaa"
+        name="dataNascimento"
+        ngModel
+        required
+        (input)="formatData($event)"
+        (blur)="validateData(dataNascimento.value, dataNascimento)"
+        #dataNascimento="ngModel"
+      />
+
+      @if (dataNascimento.errors?.['dataInvalida'] && dataNascimento.touched) {
+        <p class="control-error">
+          Data inválida. Por favor, tente novamente.
+        </p>
+      }
+
+      <label class="label required">Gênero</label>
+      <select
+        class="text-input"
+        [class.placeholder]="!genero.value"
+        name="genero"
+        ngModel
+        required
+        #genero="ngModel"
+      >
+        <option value="" disabled>Selecione...</option>
+        <option value="masculino">Masculino</option>
+        <option value="feminino">Feminino</option>
+        <option value="outro">Outro</option>
+        <option value="prefiro-nao-informar">Prefiro não informar</option>
+
+      </select>
+    
+      @if (genero.touched && genero.invalid){
+        <p class="control-error">
+          Por favor, selecione uma opção. 
+        </p>
+      }
+
+      <label class="label required">CEP</label>
+      <input
+        class="text-input"
+        id="cep"
+        type="text"
+        placeholder="00000-000"
+        name="cep"
+        ngModel
+        required
+        (input)="formatCEP($event)"
+        maxlength="9"
+        #cep="ngModel"
+      />
+
+      @if (cep.touched && cep.invalid) {
+        <p class="control-error">
+          CEP inválido. Por favor, tente novamente.
+        </p>
+      }
+
+      <label class="label required">Telefone</label>
+      <input
+        class="text-input"
+        id="telefone"
+        type="text"
+        placeholder="(00) 00000-0000"
+        name="telefone"
+        ngModel
+        required
+        (input)="formatTelefone($event)"
+        minlength="14"
+        maxlength="15"
+        #telefone="ngModel"
+      />
+
+      @if (telefone.touched && telefone.invalid) {
+        <p class="control-error">
+          Telefone inválido. Por favor, tente novamente.
+        </p>
+      }
+
+      <div class="form-text">
+        <h1>Insira seu e-mail</h1>
+        <p>Digite seu e-mail para cadastrar sua conta.</p>
+      </div>
+
+      <label class="label required">E-mail</label>
+      <input
+        class="text-input"
+        id="email"
+        type="email"
+        placeholder="seuemail@exemplo.com"
+        name="email"
+        ngModel
+        required
+        email
+        maxlength="255"
+        #email="ngModel"
+      />
+
+      @if (email.touched && email.dirty && email.invalid){
+        <p class="control-error">
+          E-mail inválido. Por favor, tente novamente. 
+        </p>
+      }
+
+      <div class="form-text">
+        <h1>Sua senha de acesso</h1>
+        <p>Crie uma senha de acesso para sua conta.</p>
+      </div>
+
+      <label class="label required">Senha</label>
+      <input
+        class="text-input"
+        id="password"
+        type="password"
+        placeholder="Mínimo 8 caracteres, uma letra maiúscula e uma letra minúscula"
+        name="senha"
+        ngModel
+        required
+        minlength="8"
+        maxlength="100"
+        pattern="^(?=.*[a-z])(?=.*[A-Z]).+$"
+        #password="ngModel"
+        />
+
+      @if (password.touched && password.dirty && password.invalid){
+        <p class="control-error">
+          A senha deve atender aos seguintes critérios:<br/>
+          - Pelo menos uma letra maiúscula<br/>
+          - Pelo menos uma letra minúscula<br/>
+          - Mínimo 8 caracteres<br/>
+        </p>
+      }
+
+      <label class="label required">Confirmar senha</label>
+      <input
+        class="text-input"
+        id="confirm-password"
+        type="password"
+        placeholder="Repita a senha"
+        name="senhaConfirmada"
+        ngModel
+        required
+        minlength="8"
+        maxlength="100"
+        #confirmPassword="ngModel"
+      />
+      
+      @if (confirmPassword.touched && confirmPassword.dirty && confirmPassword.value !== password.value){
+        <p class="control-error">
+          As senhas digitadas não coincidem.<br/>
+          Por favor, tente novamente.
+        </p>
+      }
+
+      <div class="form-text">
+        <h1>Só mais um passo</h1>
+        <p>Revise e preencha os últimos campos para finalizar seu cadastro.</p>
+      </div>
+
+      <label class="label">Fale mais sobre você (opcional)</label>
+      <textarea
+        class="text-input"
+        id="infoAdicional"
+        placeholder="Ex: hobbies, interesses, profissão..."
+        name="infoAdicional"
+        ngModel
+        maxlength="255"
+        #infoAdicional="ngModel"
+      ></textarea>
+
+      <label class="label required">Quanto é 5 + 7?</label>
+      <input
+        class="text-input"
+        id="captcha"
+        type="number"
+        placeholder="Digite o resultado"
+        name="captcha"
+        ngModel
+        required
+        #captcha="ngModel"
+      />
+
+      @if (captcha.touched && captcha.value != 12) {
+        <p class="control-error">
+          Resposta incorreta. Por favor, tente novamente.
+        </p>
+      }
+
+      <button type="submit" class="button" [disabled]="
+        userForm.invalid ||
+        confirmPassword.value !== password.value ||
+        captcha.value != 12
+      "
+      >
+      Enviar
+      </button>
+  </form>
+
+} @else {
+  <div class="result">
+    <h1>Dados enviados com sucesso!</h1>
+    @for (item of dadosSalvos | keyvalue : ordemOriginalForm; track item.key) {
+      @if (item.key !== 'senhaConfirmada' && item.key !== 'captcha') {
+        <p>
+          <strong>{{ item.key }}:</strong>
+          {{ item.key === 'senha' ? '********' : item.value }}
+        </p>
+      }
+    }
+  </div>
+
+  <button style= "margin: 3rem auto" class="button" (click)="onReset()">
+    Fazer outro envio
+  </button>
+}
