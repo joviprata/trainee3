@@ -1,0 +1,89 @@
+@if (estudos$ | async; as estudos) {
+  <div class="position-relative">
+    <div class="position-absolute top-0 start-0 ms-3 z-3">
+      <div class="dropdown">
+        <button class="btn btn-light" type="button" data-bs-toggle="dropdown">
+          <i class="bi bi-sort-down"></i>
+          Ordenar
+        </button>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" (click)="sortEstudos('conteudo')">Conteúdo</a></li>
+          <li><a class="dropdown-item" (click)="sortEstudos('anotacoes')">Anotações</a></li>
+          <li><a class="dropdown-item" (click)="sortEstudos('materia')">Matéria</a></li>
+          <li><a class="dropdown-item" (click)="sortEstudos('professor')">Professor</a></li>
+          <li><a class="dropdown-item" (click)="sortEstudos('dificuldade')">Dificuldade</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  @if (estudos.length > 0) {
+    <div class="container">
+      <div class="row row-cols-4">
+        @for (estudo of estudos; track estudo.id) {
+          <div class="col mb-3">
+            <div class="container text-center">
+              <div class="card border-{{ getColor(estudo.materia) }} border-3" style="width: 18rem; height: 21rem;">
+                
+                <a routerLink="{{ estudo.id }}/edit" class="stretched-link"></a>
+
+                <div class="card-header rounded-0 text-bg-{{ getColor(estudo.materia) }} d-flex justify-content-between fs-5">
+                  {{ estudo.materia }}
+                  <button type="button" class="z-2 btn active border-0 p-0" data-bs-toggle="modal" [attr.data-bs-target]="'#modal' + estudo.id">
+                    <i class="bi bi-x-lg fs-5"></i>
+                  </button>
+                </div>
+
+                <div class="card-body overflow-auto z-2">
+                  <h5 class="card-title">{{ estudo.conteudo }}</h5>
+                  @if (estudo.professor) {
+                    <p class="card-text">Prof. {{ estudo.professor }}</p>
+                  }
+                  <p class="card-text">{{ estudo.anotacoes }}</p>
+                </div>
+                
+                <div class="modal fade" [id]="'modal' + estudo.id" tabindex="-1">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="exampleModalLabel">{{ estudo.conteudo }}</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        Tem certeza de que deseja excluir este estudo?
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-danger" (click)="deleteEstudo(estudo)">Excluir</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="card-footer bg-transparent d-flex justify-content-between">
+                  <i class="bi bi-pencil-square fs-5"></i>
+                  <div class="d-flex align-items-center fs-5">
+                    <i class="bi bi-patch-question{{ getDifficulty(estudo.dificuldade)[0] }}"></i>
+                    <i class="bi bi-patch-question{{ getDifficulty(estudo.dificuldade)[1] }}"></i>
+                    <i class="bi bi-patch-question{{ getDifficulty(estudo.dificuldade)[2] }}"></i>
+                    <i class="bi bi-patch-question{{ getDifficulty(estudo.dificuldade)[3] }}"></i>
+                    <i class="bi bi-patch-question{{ getDifficulty(estudo.dificuldade)[4] }}"></i>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        }
+      </div>
+    </div>
+  }
+}
+@else {
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="bg-white rounded-4 shadow p-4 w-50 text-center">
+      Nenhum estudo registrado.
+        <span class="breadcrumb-item"><a routerLink="/new">Adicione um novo estudo.</a></span>
+    </div>
+  </div>
+}
